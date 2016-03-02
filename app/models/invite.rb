@@ -1,6 +1,6 @@
 # email
 class Invite < ActiveRecord::Base
-  belongs_to :organization, class: Invitation.configuration.organization_model
+  belongs_to :organizable, polymorphic: true
   belongs_to :sender, class: Invitation.configuration.user_model
   belongs_to :recipient, class: Invitation.configuration.user_model
 

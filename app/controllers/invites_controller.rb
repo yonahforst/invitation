@@ -20,4 +20,8 @@ class InvitesController < ApplicationController
       # oh no, creating an new invitation failed
     end
   end
+
+  def invite_params
+    params.require(:invite).permit(:organization_id, :email)
+  end
 end

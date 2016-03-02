@@ -1,15 +1,20 @@
 module Invitation
 
   class Configuration
+
     # ActiveRecord model class name that represents your user.
     #
     # Defaults to '::User'.
     attr_accessor :user_model
 
 
-    # ActiveRecord model class name that represents your organization.
+    # Path for new users to register for your application.
     #
-    attr_accessor :organization_model
+    attr_accessor :registration_path
+
+
+    attr_accessor :mailer_sender
+
   end
 
 
