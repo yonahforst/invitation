@@ -1,3 +1,6 @@
 class User < ActiveRecord::Base
-  invitable to: :company
+  extend Invitation::User
+
+  has_many :memberships
+  has_many :companies, through: :memberships
 end

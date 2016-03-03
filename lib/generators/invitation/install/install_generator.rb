@@ -15,6 +15,12 @@ module Invitation
         copy_migration 'create_invitations.rb'
       end
 
+      private
+
+      def copy_migration migration_name
+        migration_template "db/migrate/#{migration_name}", "db/migrate/#{migration_name}"
+      end
+
     end
   end
 end

@@ -10,10 +10,15 @@ module Invitation
 
     # Path for new users to register for your application.
     #
-    attr_accessor :registration_path
+    attr_accessor :user_registration_path
 
 
     attr_accessor :mailer_sender
+
+
+    def initialize
+      @user_model = ::User
+    end
 
   end
 
