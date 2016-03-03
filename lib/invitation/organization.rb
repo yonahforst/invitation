@@ -4,9 +4,13 @@ module Invitation
 
     included do
       has_many :invites, as: :organizable
+    end
 
-      # you must have built the relationship independently
-      has_many :invites_users, class: Invitation.configuration.user_model
+
+    # Add user to the organization.
+    def add_invited_user user
+      method = Invitation.configuration.user_model.name.underscore.pluralize
+      self.send(method).push(user)
     end
 
   end

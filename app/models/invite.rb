@@ -1,8 +1,8 @@
 # email
 class Invite < ActiveRecord::Base
   belongs_to :organizable, polymorphic: true
-  belongs_to :sender, class: Invitation.configuration.user_model
-  belongs_to :recipient, class: Invitation.configuration.user_model
+  belongs_to :sender, class_name: Invitation.configuration.user_model_class_name
+  belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name
 
   before_create :generate_token
   before_save :check_user_existence

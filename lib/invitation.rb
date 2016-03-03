@@ -1,5 +1,4 @@
 require 'invitation/engine'
-# require 'invitation/invitable'
 require 'invitation/configuration'
 require 'invitation/user'
 require 'invitation/organization'

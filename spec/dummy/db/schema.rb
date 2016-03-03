@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160303003916) do
+ActiveRecord::Schema.define(version: 20160303214941) do
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -19,9 +19,39 @@ ActiveRecord::Schema.define(version: 20160303003916) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "invites", force: :cascade do |t|
+    t.string   "email"
+    t.string   "token"
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.integer  "organizable_id"
+    t.string   "organizable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invites", ["email"], name: "index_invites_on_email"
+  add_index "invites", ["organizable_id", "organizable_type"], name: "index_invites_on_organizable_id_and_organizable_type"
+  add_index "invites", ["recipient_id"], name: "index_invites_on_recipient_id"
+  add_index "invites", ["sender_id"], name: "index_invites_on_sender_id"
+  add_index "invites", ["token"], name: "index_invites_on_token"
+
   create_table "memberships", force: :cascade do |t|
     t.integer  "company_id"
     t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_memberships", force: :cascade do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
