@@ -10,6 +10,7 @@ module Invitation
     # Path for new users to register for your application. New users are invited to
     # sign up at this path.
     #
+    # Defaults to '/sign_up'
     attr_accessor :user_registration_path
 
 
@@ -33,6 +34,7 @@ module Invitation
 
     def initialize
       @user_model = ::User
+      @user_registration_path = '/sign_up'
       @mailer_sender = 'reply@example.com'
       @url_after_invite = '/'
     end

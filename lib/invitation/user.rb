@@ -1,4 +1,5 @@
-#
+# Your user class should include this module.
+# Your user class must also be specified at Invitation.configure.user_model.
 #
 module Invitation
   module User
