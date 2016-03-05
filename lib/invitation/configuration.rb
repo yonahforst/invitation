@@ -22,9 +22,19 @@ module Invitation
     attr_accessor :mailer_sender
 
 
+    # Path that Invitation will redirect users to after an invitation is issued.
+    #
+    # Defaults to '/'
+    #
+    # Override the invites_controller method if a more complex url is required.
+    # @return [String]
+    attr_accessor :url_after_invite
+
+
     def initialize
       @user_model = ::User
       @mailer_sender = 'reply@example.com'
+      @url_after_invite = '/'
     end
 
     def user_model_class_name

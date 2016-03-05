@@ -18,13 +18,14 @@ To issue an invitation:
 new user when they sign up
 * the invitation grants the invited user access to ONLY the organization they were invited to
 
+
 == Prerequisites
 
-* An authentication system with a User model. I use https://rubygems.org/gems/authenticate
+* An authentication system with a User model and current_user helper. I use https://rubygems.org/gems/authenticate.
 * You user model must include an :email attribute
 * An second model for an 'organization' that groups users in a many-to-many association.
 
-A user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
+A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
 
 
 == Implementation
@@ -44,6 +45,10 @@ Future additions:
 * accepted flag
 * expiration date
 * move all view text to locale
+* issue many invitations at once
+* generators for views, controllers, configuration
 
+
+=== License
 This project rocks and uses MIT-LICENSE.
 
