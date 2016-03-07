@@ -14,7 +14,8 @@ class InvitesController < ApplicationController
         deliver_email(InviteMailer.existing_user_invite(@invite))
         after_invite_existing_user
       else
-        deliver_email(InviteMailer.new_user_invite(@invite, new_user_registration_path(:invite_token => @invite.token)))
+        # deliver_email(InviteMailer.new_user_invite(@invite, new_user_registration_path(:invite_token => @invite.token)))
+        deliver_email(InviteMailer.new_user_invite(@invite))
         after_invite_new_user
       end
       flash[:notice] = 'Invitation issued to ' + @invite.email
@@ -56,4 +57,7 @@ class InvitesController < ApplicationController
     Invitation.configuration.url_after_invite
   end
 
+  def user_registration(params)
+    Invitation.configuration.user_registration_url.call(params)
+  end
 end

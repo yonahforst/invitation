@@ -10,6 +10,7 @@ class InviteMailer < ActionMailer::Base
 
   def new_user_invite(invite)
     @invite = invite
+    @user_registration_url = Invitation.configuration.user_registration_url.call(:invite_token => @invite.token)
     mail(
       from: Invitation.configuration.mailer_sender,
       to: @invite.email,

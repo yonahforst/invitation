@@ -11,7 +11,7 @@ module Invitation
     # sign up at this path.
     #
     # Defaults to '/sign_up'
-    attr_accessor :user_registration_path
+    attr_accessor :user_registration_url
 
 
     # Controls the 'from' address for Invitation emails.
@@ -34,7 +34,8 @@ module Invitation
 
     def initialize
       @user_model = ::User
-      @user_registration_path = '/sign_up'
+      # @user_registration_path = '/sign_up'
+      @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @url_after_invite = '/'
     end
@@ -42,7 +43,6 @@ module Invitation
     def user_model_class_name
       @user_model.name.to_s
     end
-
   end
 
 
