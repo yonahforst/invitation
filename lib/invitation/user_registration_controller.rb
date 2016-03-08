@@ -12,14 +12,21 @@ module Invitation
     # Return true is an invitation is processed, false if no invitation is found.
     def check_and_process_invitation(new_user)
       token = params[:invite_token]
-
+      puts "!!!!!!!!!!!!token: #{token}"
       if token != nil
-        organization = Invite.find_by_token(@token).organizable #find the organization attached to the invite
+        invite = Invite.find_by_token(token)
+        puts "!!!!!!!!!!!!! invite: #{invite.inspect}"
+        organization = invite.organizable #find the organization attached to the invite
         add_new_user_to_organization(new_user, organization)
         return true
       end
 
       false
+    end
+
+    #
+    def set_token
+      @invite_token = params[:invite_token]
     end
 
 

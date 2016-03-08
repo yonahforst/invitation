@@ -7,6 +7,7 @@ class InvitesController < ApplicationController
 
   def create
     @invite = invite_from_params
+    logger.info '@invite: ' + @invite.inspect
     @invite.sender_id = current_user.id
     if @invite.save
       #if the user already exists
@@ -14,7 +15,6 @@ class InvitesController < ApplicationController
         deliver_email(InviteMailer.existing_user_invite(@invite))
         after_invite_existing_user
       else
-        # deliver_email(InviteMailer.new_user_invite(@invite, new_user_registration_path(:invite_token => @invite.token)))
         deliver_email(InviteMailer.new_user_invite(@invite))
         after_invite_new_user
       end
@@ -22,13 +22,35 @@ class InvitesController < ApplicationController
     else
       flash[:error] = 'Unable to issue invitation'
     end
-    redirect_to url_after_create
+    redirect_to url_after_invite
   end
 
   private
 
+  # Override this if you want to do something more complicated for existing users.
+  def after_invite_existing_user
+    # Add the user to the organization
+    @invite.organizable.add_invited_user(@invite.recipient)
+  end
+
+  # Override if you want to do something more complicated for new users. By default we do nothing.
+  def after_invite_new_user
+  end
+
+  # Url sender is redirected to after creating invite.
+  def url_after_invite
+    Invitation.configuration.url_after_invite
+  end
+
+  # User registration url sent to new users.
+  def user_registration(params)
+    Invitation.configuration.user_registration_url.call(params)
+  end
+
+  # Build new Invite from params
   def invite_from_params
     clean_params = params[:invite] ? invite_params : Hash.new
+    logger.info "clean params: " + clean_params.inspect
     Invite.new(clean_params)
   end
 
@@ -36,15 +58,7 @@ class InvitesController < ApplicationController
     params.require(:invite).permit(:organizable_id, :organizable_type, :email)
   end
 
-  def after_invite_existing_user
-    # Add the user to the organization
-    @invite.organizable.add_invited_user(@invite.recipient)
-  end
-
-  def after_invite_new_user
-    # nothing to do in default case, user is added to resource when they join via your registration system
-  end
-
+  # Use deliver_later from rails 4.2+ if available.
   def deliver_email(mail)
     if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new('4.2.0')
       mail.deliver_later
@@ -53,11 +67,4 @@ class InvitesController < ApplicationController
     end
   end
 
-  def url_after_create
-    Invitation.configuration.url_after_invite
-  end
-
-  def user_registration(params)
-    Invitation.configuration.user_registration_url.call(params)
-  end
 end
