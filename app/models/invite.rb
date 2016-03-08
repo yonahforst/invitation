@@ -7,6 +7,11 @@ class Invite < ActiveRecord::Base
   before_create :generate_token
   before_save :check_user_existence
 
+  validates :email, presence: true
+  validates :organizable, presence: true
+  validates :sender, presence: true
+
+
   def generate_token
     self.token = SecureRandom.hex(20).encode('UTF-8')
   end
