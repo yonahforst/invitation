@@ -1,3 +1,4 @@
+#
 # Your user model must include this concern to send and receive invitations. Your user class must also be
 # specified in the invitation configuration `Invitation.configure.user_model`.
 #
@@ -23,5 +24,13 @@ module Invitation
       has_many :sent_invites, class_name: 'Invite', foreign_key: :sender_id
     end
 
+    def claim_invite(token)
+      invite = Invite.find_by_token(token)
+      return unless invite
+      organization = invite.organizable
+      organization.add_invited_user self
+    end
+
   end
 end
+

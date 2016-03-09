@@ -25,7 +25,9 @@ class Invitation::InvitesController < ApplicationController
     redirect_to url_after_invite
   end
 
+
   private
+
 
   # Override this if you want to do something more complicated for existing users.
   def after_invite_existing_user
@@ -50,7 +52,6 @@ class Invitation::InvitesController < ApplicationController
   # Build new Invite from params
   def invite_from_params
     clean_params = params[:invite] ? invite_params : Hash.new
-    logger.info "clean params: " + clean_params.inspect
     Invite.new(clean_params)
   end
 
