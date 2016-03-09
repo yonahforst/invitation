@@ -1,5 +1,7 @@
 = Invitation
 
+A Rails gem to issue scoped invitations. 
+
 Allow users to invite others to join an organization they are a part of. Plenty of gems
 can issue a 'system-wide' invitation, but few offer 'scoped' invitations, giving an invited user access to
 a particular organization/resource.
