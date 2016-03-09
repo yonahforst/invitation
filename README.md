@@ -1,4 +1,4 @@
-= Invitation
+# Invitation
 
 A Rails gem to issue scoped invitations. 
 
@@ -10,7 +10,7 @@ Invitations are issued via email. You can invite users new to the system, or inv
 them access to a new resource.
 
 
-== Overview
+## Overview
 
 To issue an invitation:
 
@@ -21,7 +21,7 @@ new user when they sign up
 * the invitation grants the invited user access to ONLY the organization they were invited to
 
 
-== Prerequisites
+## Prerequisites
 
 * An authentication system with a User model and current_user helper. I use https://rubygems.org/gems/authenticate.
 * You user model must include an :email attribute
@@ -30,15 +30,22 @@ new user when they sign up
 A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
 
 
-== Implementation
+
+## Install
 
 
+## Configure
+
+## Use
 
 
-== Thanks
+## Thanks
 
 This gem was inspired by and draws heavily from:
 * https://gist.github.com/jlegosama/9026919
+
+With additional inspiration from:
+
 * https://github.com/scambra/devise_invitable
 
 
@@ -47,9 +54,9 @@ Future additions:
 * accepted flag
 * expiration date
 * move all view text to locale
-* issue many invitations at once
+* issue many invitations at once?
 * generators for views, controllers, configuration
-
+* dynamic user name lookup? requires JS, CSS
 
 === License
 This project rocks and uses MIT-LICENSE.
