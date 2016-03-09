@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  resources :invites, only: [:new, :create]
+  resources :invites, controller: 'invitation/invites', only: [:new, :create]
 end

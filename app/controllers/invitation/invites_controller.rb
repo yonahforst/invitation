@@ -1,4 +1,4 @@
-class InvitesController < ApplicationController
+class Invitation::InvitesController < ApplicationController
 
   def new
     @invite = invite_from_params
@@ -7,8 +7,8 @@ class InvitesController < ApplicationController
 
   def create
     @invite = invite_from_params
-    logger.info '@invite: ' + @invite.inspect
     @invite.sender_id = current_user.id
+    logger.info '@invite: ' + @invite.inspect
     if @invite.save
       #if the user already exists
       if @invite.recipient != nil
