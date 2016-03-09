@@ -43,6 +43,10 @@ module Invitation
     def user_model_class_name
       @user_model.name.to_s
     end
+
+    def user_model_instance_var
+      '@' + @user_model.name.underscore
+    end
   end
 
 

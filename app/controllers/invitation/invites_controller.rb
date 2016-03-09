@@ -49,7 +49,7 @@ class Invitation::InvitesController < ApplicationController
     Invitation.configuration.user_registration_url.call(params)
   end
 
-  # Build new Invite from params
+  # Build new Invite from params.
   def invite_from_params
     clean_params = params[:invite] ? invite_params : Hash.new
     Invite.new(clean_params)

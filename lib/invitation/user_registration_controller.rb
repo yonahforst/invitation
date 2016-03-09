@@ -22,18 +22,30 @@ module Invitation
     #
     # Use this when creating a new user. Invoke manually or from an after_action:
     #
-    #    after_action :check_and_process_invitation, only: [:create]
+    #    after_action :check_and_process_invite, only: [:create]
     #
-    # Invoke with new_user, or set @user.
+    # Invoke with new_user, or set an instance variable with the standard 'underscore' name of your user model class.
+    # For example, if your user model is UserProfile, this method will check for @user_profile.
+    #
     def check_and_process_invite(new_user = nil)
-      if new_user.nil? && defined?(@user)
-        new_user = @user
+      if new_user.nil?
+        new_user = user_instance_variable
+        puts "user_instance_variable result: #{new_user}"
       end
 
       token = params[:invite_token]
+      puts "token: #{token}"
       if token != nil && new_user != nil
         new_user.claim_invite token
       end
+    end
+
+    private
+
+    def user_instance_variable
+      name = Invitation.configuration.user_model_instance_var
+      puts "user_instance_variable NAME: #{name}"
+      self.instance_variable_get(name)
     end
 
   end
