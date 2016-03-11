@@ -4,13 +4,17 @@ module Invitation
     # ActiveRecord model class name that represents your user.
     #
     # Defaults to '::User'.
+    # @return [ActiveRecord::Base]
     attr_accessor :user_model
 
 
-    # Path for new users to register for your application. New users are invited to
-    # sign up at this path.
+    # Url for new users to register for your application. New users are invited to
+    # sign up at this url via email. The url should be expressed as a lambda that
+    # accepts one argument, a params hash. This hash will contain the invitation token.
     #
-    # Defaults to '/sign_up'
+    # Defaults to: ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
+    #
+    # @return [Lambda]
     attr_accessor :user_registration_url
 
 
@@ -34,7 +38,6 @@ module Invitation
 
     def initialize
       @user_model = ::User
-      # @user_registration_path = '/sign_up'
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @url_after_invite = '/'
@@ -45,7 +48,7 @@ module Invitation
     end
 
     def user_model_instance_var
-      '@' + @user_model.name.underscore
+      '@' + @user_model.name.demodulize.underscore
     end
   end
 

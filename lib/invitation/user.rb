@@ -26,11 +26,11 @@ module Invitation
 
     def claim_invite(token)
       invite = Invite.find_by_token(token)
-      puts "claim_invite found invite: #{invite}"
       return if invite.nil?
       organization = invite.organizable
-      puts "claim_invite found organization: #{organization}"
       organization.add_invited_user self
+      invite.recipient = self
+      invite.save
     end
 
   end

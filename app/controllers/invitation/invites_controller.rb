@@ -51,17 +51,17 @@ class Invitation::InvitesController < ApplicationController
 
   # Build new Invite from params.
   def invite_from_params
-    clean_params = params[:invite] ? invite_params : Hash.new
+    clean_params = invite_params || Hash.new
     Invite.new(clean_params)
   end
 
   def invite_params
-    params.require(:invite).permit(:organizable_id, :organizable_type, :email)
+    params.require(:invite).permit(:organizable_id, :organizable_type, :email) if params[:invite]
   end
 
   # Use deliver_later from rails 4.2+ if available.
   def deliver_email(mail)
-    if Gem::Version.new(Rails::VERSION::STRING) >= Gem::Version.new('4.2.0')
+    if mail.respond_to?(:deliver_later)
       mail.deliver_later
     else
       mail.deliver

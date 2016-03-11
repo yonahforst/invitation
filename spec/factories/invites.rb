@@ -1,4 +1,5 @@
 FactoryGirl.define do
+
   factory :invite do
 
     trait :recipient_is_existing_user do
@@ -9,11 +10,11 @@ FactoryGirl.define do
       email
     end
 
-    after(:build) { |user|
-      user.organizable = create(:company)
-      user.sender      = create(:user)
+    after(:build) { |invite|
+      invite.sender      = create(:user)
+      invite.organizable = create(:company)
+      invite.organizable.users << invite.sender
     }
   end
-
 
 end

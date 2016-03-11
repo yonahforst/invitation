@@ -39,6 +39,7 @@ RSpec.configure do |config|
     Capybara.reset_sessions!    # Forget the (simulated) browser state
     Capybara.use_default_driver # Revert Capybara.current_driver to Capybara.default_driver
   end
+
 end
 
 
@@ -48,4 +49,8 @@ def mock_request(params = {})
   allow(req).to receive(:params).and_return(params)
   allow(req).to receive(:remote_ip).and_return('111.111.111.111')
   req
+end
+
+def current_user
+  @current_user ||= create(:user, :with_company)
 end
