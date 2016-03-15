@@ -31,7 +31,7 @@ describe Invitation::InvitesController do
       let(:email) { 'gug@gug.com' }
       let(:org) { current_user.companies.first }
       before do
-        allow(InviteMailer).to receive(:new_user_invite) { mail }
+        allow(InviteMailer).to receive(:new_user) { mail }
       end
       subject { post :create, invite: { organizable_id: org.id, organizable_type: org.class.name, email: email } }
 
@@ -63,7 +63,7 @@ describe Invitation::InvitesController do
       let(:recipient) { create(:user) }
       let(:org) { current_user.companies.first }
       before do
-        allow(InviteMailer).to receive(:existing_user_invite) { mail }
+        allow(InviteMailer).to receive(:existing_user) { mail }
       end
       subject { post :create, invite: { organizable_id: org.id, organizable_type: org.class.name, email: recipient.email } }
 

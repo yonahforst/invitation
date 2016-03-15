@@ -1,7 +1,0 @@
-<p><%= t("invitation.invite_mailer.existing_user_invite.hello", email: @invite.email) %></p>
-
-<p><%= t("invitation.invite_mailer.existing_user_invite.someone_invited_you", url: root_url) %></p>
-
-<p><%= link_to t("invitation.invite_mailer.existing_user_invite.accept"), accept_invitation_url(@invite, :invite_token => @token) %></p>
-
-<p><%= t("invitation.invite_mailer.existing_user_invite.ignore").html_safe %></p>

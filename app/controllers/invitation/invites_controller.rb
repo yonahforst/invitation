@@ -12,15 +12,16 @@ class Invitation::InvitesController < ApplicationController
     if @invite.save
       #if the user already exists
       if @invite.recipient != nil
-        deliver_email(InviteMailer.existing_user_invite(@invite))
+        deliver_email(InviteMailer.existing_user(@invite))
         after_invite_existing_user
       else
-        deliver_email(InviteMailer.new_user_invite(@invite))
+        deliver_email(InviteMailer.new_user(@invite))
         after_invite_new_user
       end
-      flash[:notice] = 'Invitation issued to ' + @invite.email
+      # flash[:notice] = 'Invitation issued to ' + @invite.email
+      flash[:notice] = t('invitation.flash.invite_issued', email: @invite.email)
     else
-      flash[:error] = 'Unable to issue invitation'
+      flash[:error] = t('invitation.flash.invite_error')
     end
     redirect_to url_after_invite
   end

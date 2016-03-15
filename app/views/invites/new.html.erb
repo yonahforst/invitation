@@ -1,6 +1,9 @@
-<div id="">
+<div id="invitation" class="new">
 
-  <p>Create a new invitation</p>
+
+  <p>
+    Issue an invitation to join <%= @invite.organizable %>
+  </p>
 
   <%= form_for @invite, url: invites_path do |f| %>
       <%= f.hidden_field :organizable_id, value: @invite.organizable_id %>
@@ -9,7 +12,6 @@
       <%= f.email_field :email %>
       <%= f.submit 'Send' %>
   <% end %>
-
 
 </div>
 
