@@ -1,6 +1,6 @@
 class Company < ActiveRecord::Base
-  include Invitation::Organization
-  organization_named_by :name
+  include Invitation::Invitable
+  invitable_named_by :name
 
   has_many :memberships
   has_many :users, through: :memberships

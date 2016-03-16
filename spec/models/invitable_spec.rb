@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'invitation/configuration'
 
-describe Invitation::Organization do
+describe Invitation::Invitable do
   it 'adds a user' do
     user = create(:user)
     company = create(:company)
@@ -19,14 +19,14 @@ describe Invitation::Organization do
     context 'organization_named_by is set' do
       it 'has an organization name' do
         company = create(:company)
-        expect(company.organization_name).to be company.name
+        expect(company.invitable_name).to be company.name
       end
     end
 
     context 'organization_named_by is not set' do
       it 'has an organization name' do
         project = create(:project)
-        expect(project.organization_name).to eq project.class.name.humanize
+        expect(project.invitable_name).to eq "a #{project.class.name.humanize}"
       end
     end
   end

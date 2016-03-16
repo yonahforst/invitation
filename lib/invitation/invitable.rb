@@ -15,19 +15,19 @@
 #
 #
 module Invitation
-  module Organization
+  module Invitable
     extend ActiveSupport::Concern
 
     included do
       has_many :invites, as: :organizable
-      class_attribute :_organization_named_by
+      class_attribute :_invitable_named_by
     end
 
 
     module ClassMethods
       # Identify the method that the organization will be identified by in invitation emails.
-      def organization_named_by(named_by)
-        self._organization_named_by = named_by
+      def invitable_named_by(named_by)
+        self._invitable_named_by = named_by
       end
     end
 
@@ -40,12 +40,12 @@ module Invitation
 
 
     # Get the name of the organization for use in invitations.
-    def organization_name
-      if _organization_named_by
-        self.send(_organization_named_by)
+    def invitable_name
+      if _invitable_named_by
+        self.send(_invitable_named_by)
       else
-        logger.info "Invitation: set organization_named_by to #{self.class.name}"
-        self.class.name.humanize
+        logger.info "Invitation: set invitable_named_by to #{self.class.name}"
+        "a #{self.class.name.humanize}"
       end
     end
 
