@@ -19,7 +19,7 @@ describe InviteMailer do
     end
 
     it 'renders the mail body invitation' do
-      expect(mail.body).to match /Someone has invited you to/
+      expect(mail.body).to match /#{invite.sender.email} has invited you to/
     end
   end
 
@@ -46,7 +46,7 @@ describe InviteMailer do
     end
 
     it 'renders the mail body invitation' do
-      expect(mail.body).to match /Someone has invited you to/
+      expect(mail.body).to match /#{invite.sender.email} has invited you to/
     end
   end
 
