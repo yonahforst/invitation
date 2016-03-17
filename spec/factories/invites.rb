@@ -12,8 +12,8 @@ FactoryGirl.define do
 
     after(:build) { |invite|
       invite.sender      = create(:user)
-      invite.organizable = create(:company)
-      invite.organizable.users << invite.sender
+      invite.invitable = create(:company)
+      invite.invitable.users << invite.sender
     }
   end
 

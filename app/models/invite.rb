@@ -1,6 +1,6 @@
 # email
 class Invite < ActiveRecord::Base
-  belongs_to :organizable, polymorphic: true
+  belongs_to :invitable, polymorphic: true
   belongs_to :sender, class_name: Invitation.configuration.user_model_class_name
   belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name
 
@@ -8,7 +8,7 @@ class Invite < ActiveRecord::Base
   before_save :check_user_existence
 
   validates :email, presence: true
-  validates :organizable, presence: true
+  validates :invitable, presence: true
   validates :sender, presence: true
 
 

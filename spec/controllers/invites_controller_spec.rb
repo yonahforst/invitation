@@ -5,13 +5,13 @@ describe Invitation::InvitesController do
   describe 'get to #new' do
     before do
       org = current_user.companies.first
-      get :new, invite: {organizable_id: org.id, organizable_type: org.class.name}
+      get :new, invite: {invitable_id: org.id, invitable_type: org.class.name}
     end
 
     it { is_expected.to respond_with 200 }
 
     it 'creates new invite for senders company' do
-      expect(assigns(:invite).organizable).to eq(current_user.companies.first)
+      expect(assigns(:invite).invitable).to eq(current_user.companies.first)
     end
 
     it 'renders form' do
@@ -33,7 +33,7 @@ describe Invitation::InvitesController do
       before do
         allow(InviteMailer).to receive(:new_user) { mail }
       end
-      subject { post :create, invite: { organizable_id: org.id, organizable_type: org.class.name, email: email } }
+      subject { post :create, invite: { invitable_id: org.id, invitable_type: org.class.name, email: email } }
 
       it 'redirects' do
         subject
@@ -48,7 +48,7 @@ describe Invitation::InvitesController do
       it 'creates invitation' do
         subject
         expect(assigns(:invite)).to_not be_nil
-        expect(assigns(:invite).organizable).to eq(org)
+        expect(assigns(:invite).invitable).to eq(org)
         expect(assigns(:invite).sender).to eq(current_user)
         expect(assigns(:invite).email).to eq(email)
       end
@@ -65,7 +65,7 @@ describe Invitation::InvitesController do
       before do
         allow(InviteMailer).to receive(:existing_user) { mail }
       end
-      subject { post :create, invite: { organizable_id: org.id, organizable_type: org.class.name, email: recipient.email } }
+      subject { post :create, invite: { invitable_id: org.id, invitable_type: org.class.name, email: recipient.email } }
 
       it 'redirects' do
         subject
@@ -80,7 +80,7 @@ describe Invitation::InvitesController do
       it 'creates invitation' do
         subject
         expect(assigns(:invite)).to_not be_nil
-        expect(assigns(:invite).organizable).to eq(org)
+        expect(assigns(:invite).invitable).to eq(org)
         expect(assigns(:invite).sender).to eq(current_user)
         expect(assigns(:invite).recipient).to eq(recipient)
         expect(assigns(:invite).email).to eq(recipient.email)

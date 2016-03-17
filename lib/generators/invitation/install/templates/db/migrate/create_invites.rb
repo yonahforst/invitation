@@ -5,12 +5,12 @@ class CreateInvites < ActiveRecord::Migration
       t.string :token
       t.integer :sender_id
       t.integer :recipient_id
-      t.integer :organizable_id
-      t.string  :organizable_type
+      t.integer :invitable_id
+      t.string  :invitable_type
       t.timestamps
       t.index :email
       t.index :token
-      t.index [:organizable_id, :organizable_type]
+      t.index [:invitable_id, :invitable_type]
       t.index :recipient_id
       t.index :sender_id
     end

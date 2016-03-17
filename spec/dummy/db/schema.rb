@@ -24,14 +24,14 @@ ActiveRecord::Schema.define(version: 20160303214941) do
     t.string   "token"
     t.integer  "sender_id"
     t.integer  "recipient_id"
-    t.integer  "organizable_id"
-    t.string   "organizable_type"
+    t.integer  "invitable_id"
+    t.string   "invitable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "invites", ["email"], name: "index_invites_on_email"
-  add_index "invites", ["organizable_id", "organizable_type"], name: "index_invites_on_organizable_id_and_organizable_type"
+  add_index "invites", ["invitable_id", "invitable_type"], name: "index_invites_on_invitable_id_and_invitable_type"
   add_index "invites", ["recipient_id"], name: "index_invites_on_recipient_id"
   add_index "invites", ["sender_id"], name: "index_invites_on_sender_id"
   add_index "invites", ["token"], name: "index_invites_on_token"

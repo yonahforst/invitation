@@ -11,7 +11,7 @@ describe Invitation::Invitable do
 
   it 'tracks invites' do
     invite = create(:invite, :recipient_is_existing_user)
-    company = invite.organizable
+    company = invite.invitable
     expect(company.invites).to include invite
   end
 

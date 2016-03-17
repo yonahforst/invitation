@@ -33,7 +33,7 @@ class Invitation::InvitesController < ApplicationController
   # Override this if you want to do something more complicated for existing users.
   def after_invite_existing_user
     # Add the user to the organization
-    @invite.organizable.add_invited_user(@invite.recipient)
+    @invite.invitable.add_invited_user(@invite.recipient)
   end
 
   # Override if you want to do something more complicated for new users. By default we do nothing.
@@ -57,7 +57,7 @@ class Invitation::InvitesController < ApplicationController
   end
 
   def invite_params
-    params.require(:invite).permit(:organizable_id, :organizable_type, :email) if params[:invite]
+    params.require(:invite).permit(:invitable_id, :invitable_type, :email) if params[:invite]
   end
 
   # Use deliver_later from rails 4.2+ if available.

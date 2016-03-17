@@ -27,8 +27,8 @@ module Invitation
     def claim_invite(token)
       invite = Invite.find_by_token(token)
       return if invite.nil?
-      organization = invite.organizable
-      organization.add_invited_user self
+      invitable = invite.invitable
+      invitable.add_invited_user self
       invite.recipient = self
       invite.save
     end

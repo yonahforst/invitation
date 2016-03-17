@@ -10,7 +10,7 @@ describe Invitation::User do
     }
 
     it 'claims invites' do
-      expect(user.companies).to include invite.organizable
+      expect(user.companies).to include invite.invitable
     end
 
 

@@ -19,7 +19,7 @@ module Invitation
     extend ActiveSupport::Concern
 
     included do
-      has_many :invites, as: :organizable
+      has_many :invites, as: :invitable
       class_attribute :_invitable_named_by
     end
 
