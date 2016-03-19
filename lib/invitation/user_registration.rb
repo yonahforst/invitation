@@ -17,8 +17,8 @@ module Invitation
     end
 
 
-    # Check for an invitation token and process the invite. If an invitation is found, the invite's
-    # organization is added to the user.
+    # Check for an invitation token and process the invite. If an invitation is found, the
+    # user claims the invite.
     #
     # Use this when creating a new user. Invoke manually or from an after_action:
     #

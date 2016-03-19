@@ -14,6 +14,8 @@ module Invitation
     #
     # Defaults to: ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
     #
+    # Note that the default assumes you have `sign_up_url`.
+    #
     # @return [Lambda]
     attr_accessor :user_registration_url
 

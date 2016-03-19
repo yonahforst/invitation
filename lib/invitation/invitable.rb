@@ -1,7 +1,8 @@
 #
-# Any 'organization' model you wish to invite users to join should extend this concern.
+# Any model you wish to invite users to join should extend this concern. This is typically an
+# organization or resource with limited membership like an "account" or "project".
 #
-# Your code is responsible for managing associations to the user model.
+# Your code is responsible for managing associations between your Invitable and your user model.
 #
 # For example, to make the model class Account an organization that can receive an invitation
 #
@@ -25,10 +26,12 @@ module Invitation
 
 
     module ClassMethods
+
       # Identify the method that the organization will be identified by in invitation emails.
       def invitable_named_by(named_by)
         self._invitable_named_by = named_by
       end
+
     end
 
 
@@ -44,7 +47,7 @@ module Invitation
       if _invitable_named_by
         self.send(_invitable_named_by)
       else
-        logger.info "Invitation: set invitable_named_by to #{self.class.name}"
+        logger.info "WARNING Invitation: invitable_named_by for #{self.class.name} is not set!"
         "a #{self.class.name.humanize}"
       end
     end

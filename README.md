@@ -2,9 +2,9 @@
 
 A Rails gem to issue scoped invitations. 
 
-Allow users to invite others to join an organization they are a part of. Plenty of gems
+Allow users to invite others to join an invitable organization or resource. Plenty of gems
 can issue a 'system-wide' invitation, but few offer 'scoped' invitations, giving an invited user access to
-a particular organization/resource.
+a particular invitable organization or resource.
 
 Invitations are issued via email. You can invite users new to the system, or invite existing users by giving
 them access to a new resource.
@@ -14,11 +14,11 @@ them access to a new resource.
 
 To issue an invitation:
 
-* a user can invite someone to join an organization by providing an email
-* if the user already exists, that user is added as a member of the organization, and a notification email is sent
-* if the user does not exist, the app sends an email with a link to sign up, and creates a membership for the
-new user when they sign up
-* the invitation grants the invited user access to ONLY the organization they were invited to
+* a user can invite someone to join an invitable by providing an email address to invite
+* if the user already exists, that user is added to the invitable, and a notification email is sent
+* if the user does not exist, the app sends an email with a link to sign up. When the new user signs up,
+they are added to the invitable organization or resource.
+* the invite grants the invited user access to ONLY the invitable organization they were invited to
 
 
 ## Prerequisites
@@ -30,7 +30,6 @@ new user when they sign up
 A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
 
 
-
 ## Install
 
 
@@ -39,6 +38,8 @@ A example user-to-organization system you might be familiar with: Basecamp's con
 
 ## Use
 
+
+## Extend or Override
 
 ## Thanks
 
@@ -50,15 +51,17 @@ With additional inspiration from:
 * https://github.com/scambra/devise_invitable
 
 
+## Future changes
 
-Future additions:
-* accepted flag
-* expiration date
+* accepted flag, so we can scope invites by accepted vs not yet accepted
+* expiration date - invites expire, scope expired by not expired
 * move all view text to locale
 * issue many invitations at once?
 * generators for views, controllers, configuration
 * dynamic user name lookup? requires JS, CSS
 
-=== License
+
+## License
+
 This project rocks and uses MIT-LICENSE.
 
