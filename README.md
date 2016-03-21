@@ -32,14 +32,72 @@ A example user-to-organization system you might be familiar with: Basecamp's con
 
 ## Install
 
+To get started, add Invitation to your `Gemfile` and run `bundle install` to install it:
+
+```ruby
+gem 'invitation'
+```
+
+Then run the authenticate install generator:
+
+```sh
+rails generate invitation:install
+```
+
+The install generator does the following:
+
+* Insert `include Invitation::User` into your `User` model.
+* Add an initializer at `config/intializers/authenticate.rb`.
+* Create a migration for the Invite class.
+
+You'll need to run the migration that Invitation just generated.
+
+```sh
+rake db:migrate
+```
+
+### Invitables
+
+You'll need to manually configure resources, called invitables, to invite users to. Each invitable needs `include Invitation::Invitable`
+and the class method `invitable_named_by` set with the name of a method or attribute to call for the invitable's name.
+
+```ruby
+class Company < ActiveRecord::Base
+  include Invitation::Invitable
+  invitable_named_by :name
+end
+```
+
+### User Registration
+
+Your user registration 
+
 
 ## Configure
+
+Override any of these defaults in your application `config/initializers/authenticate.rb`.
+
+```ruby
+Invitation.configure do |config|
+  config.user_model = '::User'
+  config.user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) } 
+  config.mailer_sender = 'reply@example.com'
+  config.url_after_invite = '/'
+end
+```
+
+Configuration parameters are described in detail here: [Configuration](lib/authenticate/configuration.rb)
 
 
 ## Use
 
 
+
+
 ## Extend or Override
+
+
+
 
 ## Thanks
 

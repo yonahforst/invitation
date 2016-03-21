@@ -57,6 +57,22 @@ module Invitation
         @file_name = @class_path.pop
       end
 
+
+
+
+
+      def invitable_file_path invitable_class_name
+        File.join('app', 'models', "#{invitable_model_name(invitable_class_name).underscore}.rb")
+      end
+
+      def invitable_model_name invitable_class_name
+        if namespaced?
+          [namespace.to_s] + [invitable_class_name.classify]
+        else
+          [invitable_class_name.classify]
+        end.join('::')
+      end
+
     end
   end
 end
