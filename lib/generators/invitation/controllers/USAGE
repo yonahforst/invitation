@@ -1,0 +1,10 @@
+Description:
+  Override the default invitation controller and mailer. This generator will copy all of the
+  invitation controllers and mailers into your project.
+
+Examples:
+  rails generate invitation:controllers
+
+  Controller: app/controllers/invitation/invites_controller.rb
+  Mailer:     app/mailers/invitation_mailer.rb
+

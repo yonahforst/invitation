@@ -38,11 +38,25 @@ module Invitation
     attr_accessor :url_after_invite
 
 
+    # Enable or disable Invitation's built-in routes.
+    #
+    # Defaults to 'true'.
+    #
+    # If you disable the routes, your application is responsible for all routes.
+    #
+    # You can deploy a copy of Invitations's routes with `rails generate invitation:routes`,
+    # which will also set `config.routes = false`.
+    #
+    # @return [Boolean]
+    attr_accessor :routes
+
+
     def initialize
       @user_model = ::User
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @url_after_invite = '/'
+      @routes = true
     end
 
     def user_model_class_name
@@ -52,6 +66,12 @@ module Invitation
     def user_model_instance_var
       '@' + @user_model.name.demodulize.underscore
     end
+
+    # @return [Boolean] are Invitation's built-in routes enabled?
+    def routes_enabled?
+      @routes
+    end
+
   end
 
 
