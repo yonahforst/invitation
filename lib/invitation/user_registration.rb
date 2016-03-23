@@ -22,12 +22,12 @@ module Invitation
     #
     # Use this when creating a new user. Invoke manually or from an after_action:
     #
-    #     after_action :check_and_process_invite, only: [:create]
+    #     after_action :process_invite, only: [:create]
     #
     # Invoke with new_user, or set an instance variable with the standard 'underscore' name of your user model class.
     # For example, if your user model is UserProfile, this method will check for @user_profile.
     #
-    def check_and_process_invite(new_user = nil)
+    def process_invite(new_user = nil)
       if new_user.nil?
         new_user = user_instance_variable
       end

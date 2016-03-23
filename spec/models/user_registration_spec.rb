@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'invitation/configuration'
 
 describe Invitation::UserRegistration do
+
+  # guts of a User Registration controller
   class DummyUserRegistration
     include Invitation::UserRegistration
     def initialize(invite)
@@ -13,14 +15,15 @@ describe Invitation::UserRegistration do
     end
   end
 
-  it 'check_and_process_invite adds organization to recipient' do
+
+  it 'process_invite adds organization to recipient' do
     invite = create(:invite, :recipient_is_existing_user)
 
     expect(invite.recipient.companies).to_not include invite.invitable
     expect(invite.sender.companies).to include invite.invitable
 
     reg = DummyUserRegistration.new invite
-    reg.check_and_process_invite
+    reg.process_invite
 
     recipient = invite.recipient.reload
     expect(recipient.companies).to include invite.invitable

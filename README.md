@@ -38,7 +38,10 @@ To get started, add Invitation to your `Gemfile` and run `bundle install` to ins
 gem 'invitation'
 ```
 
-Then run the authenticate install generator:
+
+### Installer
+
+Run the authenticate install generator:
 
 ```sh
 rails generate invitation:install
@@ -56,10 +59,12 @@ You'll need to run the migration that Invitation just generated.
 rake db:migrate
 ```
 
+
 ### Invitables
 
-You'll need to manually configure resources, called invitables, to invite users to. Each invitable needs `include Invitation::Invitable`
-and the class method `invitable_named_by` set with the name of a method or attribute to call for the invitable's name.
+You'll need to manually configure resources, called invitables, to invite users to. Each invitable needs
+`include Invitation::Invitable` and the class method `invitable_named_by` set with the name of a method or 
+attribute to that returns the invitable's name.
 
 ```ruby
 class Company < ActiveRecord::Base
@@ -68,9 +73,20 @@ class Company < ActiveRecord::Base
 end
 ```
 
+
 ### User Registration
 
-Your user registration 
+Your user registration controller must `include Invitation::UserRegistration`. You'll want to invoke `set_invite_token`
+before you execute your `new` action, and `process_invite` after your create action.
+
+```ruby
+class UsersController < Authenticate::UsersController
+  include Invitation::UserRegistration
+  before_action :set_invite_token, only: [:new]
+  after_action :process_invite, only: [:create]
+end
+```
+ 
 
 
 ## Configure
@@ -90,6 +106,7 @@ Configuration parameters are described in detail here: [Configuration](lib/authe
 
 
 ## Use
+
 
 
 
