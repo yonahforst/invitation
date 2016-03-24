@@ -38,6 +38,7 @@ module Invitation
       end
 
       def inject_into_invitables
+        return unless options[:invitable]
         options[:invitable].each do |invitable|
           path = invitable_file_path(invitable)
           class_name = invitable.classify
