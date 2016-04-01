@@ -12,7 +12,7 @@ en:
         subject: "Invitation instructions"
         hello: "Hello %{email}"
         someone_invited_you: "%{sender} has invited you to <b>%{invitable}</b> at %{url}. You now have permissions to access it."
-        ignore: "If you don't want this, please ignore this email or contact the sender."
+        ignore: "If you don't want this permission added or feel it is in error, please contact %{sender}."
       new_user:
         subject: "Invitation instructions"
         hello: "Hello %{email}"

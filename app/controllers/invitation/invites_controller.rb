@@ -18,7 +18,6 @@ class Invitation::InvitesController < ApplicationController
         deliver_email(InviteMailer.new_user(@invite))
         after_invite_new_user
       end
-      # flash[:notice] = 'Invitation issued to ' + @invite.email
       flash[:notice] = t('invitation.flash.invite_issued', email: @invite.email)
     else
       flash[:error] = t('invitation.flash.invite_error')
@@ -45,19 +44,14 @@ class Invitation::InvitesController < ApplicationController
     Invitation.configuration.url_after_invite
   end
 
-  # User registration url sent to new users.
-  def user_registration(params)
-    Invitation.configuration.user_registration_url.call(params)
-  end
-
   # Build new Invite from params.
   def invite_from_params
-    clean_params = invite_params || Hash.new
-    Invite.new(clean_params)
+    Invite.new(invite_params)
   end
 
   def invite_params
-    params.require(:invite).permit(:invitable_id, :invitable_type, :email) if params[:invite]
+    return params.require(:invite).permit(:invitable_id, :invitable_type, :email) if params[:invite]
+    Hash.new
   end
 
   # Use deliver_later from rails 4.2+ if available.

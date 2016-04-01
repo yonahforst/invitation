@@ -41,7 +41,7 @@ gem 'invitation'
 
 ### Installer
 
-Run the authenticate install generator:
+Run the invitation install generator:
 
 ```sh
 rails generate invitation:install
@@ -50,7 +50,7 @@ rails generate invitation:install
 The install generator does the following:
 
 * Insert `include Invitation::User` into your `User` model.
-* Add an initializer at `config/intializers/authenticate.rb`.
+* Add an initializer at `config/initializers/invitation.rb`.
 * Create a migration for the Invite class.
 
 You'll need to run the migration that Invitation just generated.
@@ -91,7 +91,7 @@ end
 
 ## Configure
 
-Override any of these defaults in your application `config/initializers/authenticate.rb`.
+Override any of these defaults in your application `config/initializers/invitation.rb`.
 
 ```ruby
 Invitation.configure do |config|
@@ -102,7 +102,7 @@ Invitation.configure do |config|
 end
 ```
 
-Configuration parameters are described in detail here: [Configuration](lib/authenticate/configuration.rb)
+Configuration parameters are described in detail here: [Configuration](lib/invitation/configuration.rb)
 
 
 ## Use
