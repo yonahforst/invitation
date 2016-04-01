@@ -13,8 +13,8 @@ module Invitation
       class_option :model, optional: true, type: :string, banner: 'model',
                    desc: "Specify the model class name if you will use anything other than 'User'"
 
-      class_option :invitable, optional: true, type: :array, banner: 'invitable',
-                   desc: "Specify the model class name if you will use anything other than 'User'"
+      # class_option :invitable, optional: true, type: :array, banner: 'invitable',
+      #              desc: "Specify the model class name if you will use anything other than 'User'"
 
       def verify
         if options[:model] && !File.exists?(model_path)
@@ -23,28 +23,28 @@ module Invitation
         end
       end
 
-      def verify_invitable
-        return unless options[:invitable]
-        options[:invitable].each do |invitable|
-          unless File.exists?(invitable_file_path invitable)
-            puts "Exiting: the model class you specified to make invitable, #{invitable}, is not found."
-            exit 1
-          end
-        end
-      end
+      # def verify_invitable
+      #   return unless options[:invitable]
+      #   options[:invitable].each do |invitable|
+      #     unless File.exists?(invitable_file_path invitable)
+      #       puts "Exiting: the model class you specified to make invitable, #{invitable}, is not found."
+      #       exit 1
+      #     end
+      #   end
+      # end
 
       def inject_into_user_model
         inject_into_class model_path, model_class_name, "  include Invitation::User\n\n"
       end
 
-      def inject_into_invitables
-        return unless options[:invitable]
-        options[:invitable].each do |invitable|
-          path = invitable_file_path(invitable)
-          class_name = invitable.classify
-          inject_into_class path, class_name, "  include Invitation::Invitable\n\n"
-        end
-      end
+      # def inject_into_invitables
+      #   return unless options[:invitable]
+      #   options[:invitable].each do |invitable|
+      #     path = invitable_file_path(invitable)
+      #     class_name = invitable.classify
+      #     inject_into_class path, class_name, "  include Invitation::Invitable\n\n"
+      #   end
+      # end
 
       def copy_migration_files
         copy_migration 'create_invites.rb'
