@@ -7,8 +7,7 @@
 # For example, to make the model class Account an organization that can receive an invitation
 #
 #     class Account < ActiveRecord::Base
-#       include Invitation::Organization
-#       organization_named_by :name
+#       invitable named_by: :name
 #
 #       has_many :account_memberships
 #       has_many :users, through: :account_memberships
@@ -17,38 +16,46 @@
 #
 module Invitation
   module Invitable
-    extend ActiveSupport::Concern
 
-    included do
+    def invitable(options = {})
       has_many :invites, as: :invitable
-      class_attribute :_invitable_named_by
-    end
+      class_attribute :invitable_options
 
+      self.invitable_options = options.dup # named_by: :name, named: 'Gug'
+      self.invitable_options[:named_by] = options[:named_by] if options[:named_by]
+      self.invitable_options[:named] = options[:named] if options[:named]
 
-    module ClassMethods
-
-      # Identify the method that the organization will be identified by in invitation emails.
-      def invitable_named_by(named_by)
-        self._invitable_named_by = named_by
+      unless self.invitable_options[:named] || self.invitable_options[:named_by]
+        raise <<-eos
+invitable requires options be set, either :name or :named_by.
+  invitable named: "string"
+or
+  invitable named_by: :method_name
+eos
       end
 
+      include Invitation::Invitable::InstanceMethods
     end
 
 
-    # Add the invited user to the organization. Called by InvitesController.
-    def add_invited_user(user)
-      method = Invitation.configuration.user_model.name.underscore.pluralize
-      self.send(method).push(user)
-    end
+    module InstanceMethods
 
+      # Add the invited user to the organization. Called by InvitesController.
+      def add_invited_user(user)
+        method = Invitation.configuration.user_model.name.underscore.pluralize
+        self.send(method).push(user)
+      end
 
-    # Get the name of the organization for use in invitations.
-    def invitable_name
-      if _invitable_named_by
-        self.send(_invitable_named_by)
-      else
-        logger.info "WARNING Invitation: invitable_named_by for #{self.class.name} is not set!"
-        "a #{self.class.name.humanize}"
+      # Get the name of the organization for use in invitations.
+      def invitable_name
+        if invitable_options[:named_by]
+          self.send(invitable_options[:named_by])
+        elsif invitable_options[:named]
+          invitable_options[:named]
+        else
+          logger.info "WARNING Invitation acts_as_invitable:  for #{self.class.name} is not set!"
+          "a #{self.class.name.humanize}"
+        end
       end
     end
 

@@ -2,30 +2,28 @@
 
 A Rails gem to issue scoped invitations. 
 
+## Overview
+
 Allow users to invite others to join an invitable organization or resource. Plenty of gems
 can issue a 'system-wide' invitation, but few offer 'scoped' invitations, giving an invited user access to
 a particular invitable organization or resource.
 
-Invitations are issued via email. You can invite users new to the system, or invite existing users by giving
-them access to a new resource.
-
-
-## Overview
-
-To issue an invitation:
+Invitations are issued via email. You can invite users new to join the system while giving them permissions to
+a resource, or invite existing users by giving them access to a new resource.
 
 * a user can invite someone to join an invitable by providing an email address to invite
-* if the user already exists, that user is added to the invitable, and a notification email is sent
-* if the user does not exist, the app sends an email with a link to sign up. When the new user signs up,
-they are added to the invitable organization or resource.
-* the invite grants the invited user access to ONLY the invitable organization they were invited to
+* if the user already exists, that user is granted access to the invitable, and a notification email is sent
+* if the user does not exist, sends an email with a link to sign up. When the new user signs up,
+they are added to the invitable resource/organization.
+* the invite grants the invited user access to ONLY the invitable organization they were invited to.
 
 
 ## Prerequisites
 
-* An authentication system with a User model and current_user helper. I use https://rubygems.org/gems/authenticate.
-* You user model must include an :email attribute
-* An second model for an 'organization' that groups users in a many-to-many association.
+* An authentication system with a User model and current_user helper, e.g. https://github.com/tomichj/authenticate.
+* Your user model must include an :email attribute.
+* Additional model classes that are resources or organizations you wish to invite users to join, usually with a
+many-to-many relationship to your user model.
 
 A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
 
@@ -47,46 +45,20 @@ Run the invitation install generator:
 rails generate invitation:install
 ```
 
+If your user model is not User, you can optionally specify one: `rails generate invitation:install --model Profile`. 
+
 The install generator does the following:
 
+* Add an initializer at `config/initializers/invitation.rb`, see [Configure](#configure) below.
 * Insert `include Invitation::User` into your `User` model.
-* Add an initializer at `config/initializers/invitation.rb`.
 * Create a migration for the Invite class.
 
-You'll need to run the migration that Invitation just generated.
+
+Then run the migration that Invitation just generated.
 
 ```sh
 rake db:migrate
 ```
-
-
-### Invitables
-
-You'll need to manually configure resources, called invitables, to invite users to. Each invitable needs
-`include Invitation::Invitable` and the class method `invitable_named_by` set with the name of a method or 
-attribute to that returns the invitable's name.
-
-```ruby
-class Company < ActiveRecord::Base
-  include Invitation::Invitable
-  invitable_named_by :name
-end
-```
-
-
-### User Registration
-
-Your user registration controller must `include Invitation::UserRegistration`. You'll want to invoke `set_invite_token`
-before you execute your `new` action, and `process_invite` after your create action.
-
-```ruby
-class UsersController < Authenticate::UsersController
-  include Invitation::UserRegistration
-  before_action :set_invite_token, only: [:new]
-  after_action :process_invite, only: [:create]
-end
-```
- 
 
 
 ## Configure
@@ -102,16 +74,159 @@ Invitation.configure do |config|
 end
 ```
 
-Configuration parameters are described in detail here: [Configuration](lib/invitation/configuration.rb)
+Configuration parameters are described in detail here: [configuration]
 
 
-## Use
+### Invitable
+
+You'll need to configure one or more model classes as invitables. Invitables are resources or organizations that
+users issue invitations to join. Each invitable needs to call a class method, `invitable`, supply an argument: 
+either `named: "String"` or `named_by: :some_method_name`.
+
+```ruby
+class Company < ActiveRecord::Base
+  invitable named_by: :name
+end
+```
 
 
+### User Registration Controller
 
+Your user registration controller must `include Invitation::UserRegistration`. You'll want to invoke `set_invite_token`
+before you execute your `new` action, and `process_invite` after your create action.
+
+If you're using [Authenticate](https://github.com/tomichj/authenticate), for example:
+```ruby
+class UsersController < Authenticate::UsersController
+  include Invitation::UserRegistration
+  before_action :set_invite_token, only: [:new]
+  after_action :process_invite, only: [:create]
+end
+``` 
+
+
+## Usage
+
+Invitation adds routes to build and create invitations (GET to new_invite and POST to invites). Once you've configured
+Invitation and set up an invitable,  add a link to new_invite, specifying the the invitable id and type in the link:
+```erb
+  <%= link_to 'invite a friend', 
+              new_invite_path(invite: { invitable_id: account.id, invitable_type: 'Account' } ) %>
+```
+
+Invitation includes a simple `invitations#new` view which accepts an email address for a user to invite. 
+
+When the form is submitted, [invites#create](app/controllers/invitation/invites_controller.rb) will build 
+an [invite](app/models/invite.rb) to track the invitation. An email is then sent:
+
+* a new user is emailed a link to your user registration page as set in [configuration], with a secure
+invitation link that will be used to 'claim' the invitation when the new user registers 
+
+* existing users are sent an email notifying them that they've been added to the resource
 
 
 ## Extend or Override
+
+
+### Views
+
+You can quickly get started with a rails application using the built-in views. See [app/views](/app/views) for
+the default views. When you want to customize an Invitation view, create your own copy of it in your app.
+
+You can use the Invitation view generator to copy the default views into your application: 
+
+```sh
+$ rails generate invitation:views
+```
+
+
+### Routes
+
+Invitation adds routes to your application. See [config/routes.rb](/config/routes.rb) for the default routes.
+
+If you want to control and customize the routes, you can turn off the built-in routes in
+the Invitation [configuration] with `config.routes = false` and dump a copy of the default routes into your
+application for modification.
+
+To turn off Invitation's built-in routes:
+
+```ruby
+Invitation.configure do |config|
+  config.routes = false
+end
+```
+
+You can run a generator to dump a copy of the default routes into your application for modification. The generator
+will also switch off the routes by setting `config.routes = false` in your [configuration].
+
+```sh
+$ rails generate invitation:routes
+```
+
+
+### Controllers
+
+You can customize the `invites_controller.rb` and the `invites_mailer.rb`. See [app/controllers](/app/controllers)
+for the controller, and [app/mailers](/app/mailers) for the mailer.
+
+To override `invites_controller.rb`, subclass the controller and update your routes to point to your implementation.
+
+* subclass the controller:
+
+```ruby
+# app/controllers/invites_controller.rb
+class InvitesController < Invitation::InvitesController
+  # render invite screen
+  def new
+    # ...
+  end
+  ...
+end
+```
+
+* update your routes to use your new controller. 
+
+Start by dumping a copy of authenticate routes to your `config/routes.rb`:
+
+```sh
+$ rails generate invitation:routes 
+```
+
+Now update `config/routes.rb` to point to your new controller:
+
+```ruby
+resources :invites, controller: 'invites', only: [:new, :create]
+...
+```
+
+You can also use the Invitation controller generator to copy the default controller and mailer into 
+your application:
+
+```sh
+$ rails generate invitation:controllers
+```
+
+### Layout
+
+Invitation uses your application's default layout. If you would like to change the layout Invitation uses when
+rendering views, you can either deploy copies of the controllers and customize them, or you can specify
+the layout in an initializer. This should be done in a to_prepare callback in `config/application.rb`
+because it's executed once in production and before each request in development.
+                              
+You can specify the layout per-controller:
+
+```ruby
+config.to_prepare do
+  Invitation::InvitesController.layout 'my_invites_layout'
+end
+```
+
+### Translations
+
+All flash messages and email lines are stored in i18n translations. You can override them like any other translation.
+
+See [config/locales/invitation.en.yml](/config/locales/invitation.en.yml) for the default messages.
+
 
 
 
@@ -122,7 +237,6 @@ This gem was inspired by and draws heavily from:
 * https://gist.github.com/jlegosama/9026919
 
 With additional inspiration from:
-
 * https://github.com/scambra/devise_invitable
 
 
@@ -139,4 +253,8 @@ With additional inspiration from:
 ## License
 
 This project rocks and uses MIT-LICENSE.
+
+
+[configuration]: lib/invitation/configuration.rb
+
 

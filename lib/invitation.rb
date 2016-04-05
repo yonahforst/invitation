@@ -8,3 +8,4 @@ module Invitation
 end
 
 # ActiveRecord::Base.send :include, Invitation::Invitable
+ActiveRecord::Base.extend Invitation::Invitable

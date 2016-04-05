@@ -20,7 +20,7 @@ module Invitation
     # Check for an invitation token and process the invite. If an invitation is found, the
     # user claims the invite.
     #
-    # Use this when creating a new user. Invoke manually or from an after_action:
+    # Use this only when creating a new user. Invoke manually or from an after_action:
     #
     #     after_action :process_invite, only: [:create]
     #
