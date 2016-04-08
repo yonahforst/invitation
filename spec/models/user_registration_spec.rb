@@ -23,7 +23,7 @@ describe Invitation::UserRegistration do
     expect(invite.sender.companies).to include invite.invitable
 
     reg = DummyUserRegistration.new invite
-    reg.process_invite
+    reg.process_invite_token
 
     recipient = invite.recipient.reload
     expect(recipient.companies).to include invite.invitable

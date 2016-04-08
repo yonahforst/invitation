@@ -27,7 +27,7 @@ module Invitation
     # Invoke with new_user, or set an instance variable with the standard 'underscore' name of your user model class.
     # For example, if your user model is UserProfile, this method will check for @user_profile.
     #
-    def process_invite(new_user = nil)
+    def process_invite_token(new_user = nil)
       if new_user.nil?
         new_user = user_instance_variable
       end
