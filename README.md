@@ -1,6 +1,11 @@
 # Invitation
 
-A Rails gem to issue scoped invitations. 
+A Rails gem to issue scoped invitations.
+
+Please use [GitHub Issues] to report bugs.
+
+[![Gem Version](https://badge.fury.io/rb/invitation.svg)](https://badge.fury.io/rb/invitation) ![Build status](https://travis-ci.org/tomichj/invitation.svg?branch=master) ![Code Climate](https://codeclimate.com/github/tomichj/invitation/badges/gpa.svg)
+
 
 ## Overview
 
@@ -256,5 +261,4 @@ This project rocks and uses MIT-LICENSE.
 
 
 [configuration]: lib/invitation/configuration.rb
-
-
+[GitHub Issues]: https://github.com/tomichj/invitation/issues

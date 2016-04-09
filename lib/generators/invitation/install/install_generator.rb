@@ -17,7 +17,7 @@ module Invitation
       #              desc: "Specify the model class name if you will use anything other than 'User'"
 
       def verify
-        if options[:model] && !File.exists?(model_path)
+        if options[:model] && !File.exist?(model_path)
           puts "Exiting: the model class you specified, #{options[:model]}, is not found."
           exit 1
         end
