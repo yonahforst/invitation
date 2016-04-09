@@ -53,8 +53,8 @@ eos
         elsif invitable_options[:named]
           invitable_options[:named]
         else
-          logger.info "WARNING Invitation acts_as_invitable:  for #{self.class.name} is not set!"
-          "a #{self.class.name.humanize}"
+          raise 'Invitation runtime error: invitable does not have name: or named_by: set, should not be possible! ' +
+              self.inspect
         end
       end
     end
