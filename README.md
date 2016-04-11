@@ -2,16 +2,16 @@
 
 A Rails gem to issue scoped invitations.
 
-Please use [GitHub Issues] to report bugs.
+Please use [GitHub Issues] to report bugs. You can contact me directly on twitter
+[@JustinTomich](https://twitter.com/justintomich).
 
 [![Gem Version](https://badge.fury.io/rb/invitation.svg)](https://badge.fury.io/rb/invitation) ![Build status](https://travis-ci.org/tomichj/invitation.svg?branch=master) ![Code Climate](https://codeclimate.com/github/tomichj/invitation/badges/gpa.svg)
 
 
 ## Overview
 
-Allow users to invite others to join an invitable organization or resource. Plenty of gems
-can issue a 'system-wide' invitation, but few offer 'scoped' invitations, giving an invited user access to
-a particular invitable organization or resource.
+Allow users to invite others to join an organization or resource. Plenty of gems can issue a 'system-wide' invitation,
+but few offer 'scoped' invitations, giving an invited user access to a particular invitable organization or resource.
 
 Invitations are issued via email. You can invite users new to join the system while giving them permissions to
 a resource, or invite existing users by giving them access to a new resource.
@@ -41,10 +41,7 @@ To get started, add Invitation to your `Gemfile` and run `bundle install` to ins
 gem 'invitation'
 ```
 
-
-### Installer
-
-Run the invitation install generator:
+Then run the invitation install generator:
 
 ```sh
 rails generate invitation:install
@@ -85,8 +82,16 @@ Configuration parameters are described in detail here: [configuration]
 ### Invitable
 
 You'll need to configure one or more model classes as invitables. Invitables are resources or organizations that
-users issue invitations to join. Each invitable needs to call a class method, `invitable`, supply an argument: 
-either `named: "String"` or `named_by: :some_method_name`.
+are joined through invitations.
+
+Invitables must have a name for Invitation to use in views and mailers.
+
+An invitable needs to call a class method, `invitable`, with one of the following options:
+* `named: "String"`
+* `named_by: :some_method_name`.
+
+Example: a Company model that users can be invited to join. The companies are identified in invitation emails by
+their `name` attribute:
 
 ```ruby
 class Company < ActiveRecord::Base
@@ -112,8 +117,9 @@ end
 
 ## Usage
 
-Invitation adds routes to build and create invitations (GET to new_invite and POST to invites). Once you've configured
-Invitation and set up an invitable,  add a link to new_invite, specifying the the invitable id and type in the link:
+Invitation adds routes to create invitations (GET new_invite and POST invites). Once you've configured
+Invitation and set up an invitable, add a link to new_invite, specifying the the invitable id and type in the link:
+
 ```erb
   <%= link_to 'invite a friend', 
               new_invite_path(invite: { invitable_id: account.id, invitable_type: 'Account' } ) %>
@@ -121,16 +127,16 @@ Invitation and set up an invitable,  add a link to new_invite, specifying the th
 
 Invitation includes a simple `invitations#new` view which accepts an email address for a user to invite. 
 
-When the form is submitted, [invites#create](app/controllers/invitation/invites_controller.rb) will build 
+When the form is submitted, [invites#create](app/controllers/invitation/invites_controller.rb) will create
 an [invite](app/models/invite.rb) to track the invitation. An email is then sent:
 
 * a new user is emailed a link to your user registration page as set in [configuration], with a secure
 invitation link that will be used to 'claim' the invitation when the new user registers 
 
-* existing users are sent an email notifying them that they've been added to the resource
+* an existing user is emailed a notification to tell them that they've been added to the resource
 
 
-## Extend or Override
+## Overriding Invitation
 
 
 ### Views
@@ -138,7 +144,8 @@ invitation link that will be used to 'claim' the invitation when the new user re
 You can quickly get started with a rails application using the built-in views. See [app/views](/app/views) for
 the default views. When you want to customize an Invitation view, create your own copy of it in your app.
 
-You can use the Invitation view generator to copy the default views into your application: 
+You can use the Invitation view generator to copy the default views and translations
+(see [translations](#translations) below) into your application:
 
 ```sh
 $ rails generate invitation:views
@@ -197,19 +204,20 @@ Start by dumping a copy of authenticate routes to your `config/routes.rb`:
 $ rails generate invitation:routes 
 ```
 
-Now update `config/routes.rb` to point to your new controller:
+Now update `config/routes.rb`, changing the controller entry so it now points to your `invites` controller instead
+of `invitation/invites`:
 
 ```ruby
 resources :invites, controller: 'invites', only: [:new, :create]
-...
 ```
 
 You can also use the Invitation controller generator to copy the default controller and mailer into 
-your application:
+your application if you would prefer to more heavily modify the controller.
 
 ```sh
 $ rails generate invitation:controllers
 ```
+
 
 ### Layout
 
@@ -226,14 +234,13 @@ config.to_prepare do
 end
 ```
 
+
 ### Translations
 
-All flash messages and email lines are stored in i18n translations. You can override them like any other translation.
+All flash messages and email subject lines are stored in [i18n translations](http://guides.rubyonrails.org/i18n.html).
+Override them like any other i18n translation.
 
 See [config/locales/invitation.en.yml](/config/locales/invitation.en.yml) for the default messages.
-
-
-
 
 
 ## Thanks
@@ -253,7 +260,7 @@ With additional inspiration from:
 * issue many invitations at once?
 * generators for views, controllers, configuration
 * dynamic user name lookup? requires JS, CSS
-
+* plaintext mailer
 
 ## License
 
