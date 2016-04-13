@@ -59,7 +59,7 @@ describe Invitation::InvitesController do
         expect(flash[:notice]).to be_present
       end
 
-      context 'json invitation' do
+      context 'json' do
         subject { post :create, invite: { invitable_id: org.id, invitable_type: org.class.name, email: email }, format: :json }
         it 'responds with success' do
           subject
@@ -69,7 +69,6 @@ describe Invitation::InvitesController do
         it 'responds with json' do
           subject
           parsed = JSON.parse(response.body)
-          puts "parsed response:" + parsed.inspect
           expect(parsed['email']).to eq email
           expect(parsed['recipient_id']).to be nil
           expect(parsed['sender_id']).to eq current_user.id

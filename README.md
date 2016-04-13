@@ -136,6 +136,34 @@ invitation link that will be used to 'claim' the invitation when the new user re
 * an existing user is emailed a notification to tell them that they've been added to the resource
 
 
+### JSON Invitation
+
+You can send a JSON request to [invites#create](app/controllers/invitation/invites_controller.rb).
+
+* request
+
+invite:
+{
+    "email": String,
+    "invitable_id": Number,
+    "invitable_type": String
+}
+
+
+* response:
+
+{
+    "id": Number, 
+    "email": String, 
+    "sender_id": Number, 
+    "recipient_id": Number (optional), 
+    "invitable_id": Number, 
+    "invitable_type": String, 
+    "created_at": DateTime, 
+    "updated_at": DateTime
+}
+
+
 ## Overriding Invitation
 
 
