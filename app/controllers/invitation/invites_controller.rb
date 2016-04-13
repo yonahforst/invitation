@@ -23,7 +23,7 @@ class Invitation::InvitesController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to url_after_invite }
-      format.json { render json: @invite.invitable }
+      format.json { render json: @invite.as_json(except: :token) }
     end
   end
 
