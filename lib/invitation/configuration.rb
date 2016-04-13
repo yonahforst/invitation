@@ -29,15 +29,6 @@ module Invitation
     attr_accessor :mailer_sender
 
 
-    # Path that Invitation will redirect users to after an invitation is issued.
-    #
-    # Defaults to '/'
-    #
-    # Override the invites_controller method if a more complex url is required.
-    # @return [String]
-    attr_accessor :url_after_invite
-
-
     # Enable or disable Invitation's built-in routes.
     #
     # Defaults to 'true'.
@@ -55,7 +46,6 @@ module Invitation
       @user_model = ::User
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
-      @url_after_invite = '/'
       @routes = true
     end
 

@@ -1,5 +1,4 @@
 class Invitation::InvitesController < ApplicationController
-
   def new
     @invite = invite_from_params
     render template: 'invites/new'
@@ -8,7 +7,7 @@ class Invitation::InvitesController < ApplicationController
   def create
     @invite = invite_from_params
     @invite.sender_id = current_user.id
-    logger.info '@invite: ' + @invite.inspect
+    logger.debug '@invite: ' + @invite.inspect
     if @invite.save
       #if the user already exists
       if @invite.recipient != nil
@@ -22,7 +21,10 @@ class Invitation::InvitesController < ApplicationController
     else
       flash[:error] = t('invitation.flash.invite_error')
     end
-    redirect_to url_after_invite
+    respond_to do |format|
+      format.html { redirect_to url_after_invite }
+      format.json { render json: @invite.invitable }
+    end
   end
 
 
@@ -39,9 +41,9 @@ class Invitation::InvitesController < ApplicationController
   def after_invite_new_user
   end
 
-  # Url sender is redirected to after creating invite.
+  #
   def url_after_invite
-    Invitation.configuration.url_after_invite
+    @invite.invitable
   end
 
   # Build new Invite from params.

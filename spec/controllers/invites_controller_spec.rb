@@ -38,6 +38,7 @@ describe Invitation::InvitesController do
       it 'redirects' do
         subject
         expect(response.response_code).to be 302
+        expect(response).to redirect_to(company_url org)
       end
 
       it 'sends email' do

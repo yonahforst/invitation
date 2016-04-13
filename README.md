@@ -258,9 +258,9 @@ With additional inspiration from:
 * expiration date - invites expire, scope expired by not expired
 * move all view text to locale
 * issue many invitations at once?
-* generators for views, controllers, configuration
 * dynamic user name lookup? requires JS, CSS
 * plaintext mailer
+* add JS, JSON support to invites#create
 
 ## License
 
