@@ -2,7 +2,7 @@
 
 A Rails gem to issue scoped invitations.
 
-Please use [GitHub Issues] to report bugs. You can contact me directly on twitter
+Please use [GitHub Issues] to report bugs. You can contact me directly on twitter at
 [@JustinTomich](https://twitter.com/justintomich).
 
 [![Gem Version](https://badge.fury.io/rb/invitation.svg)](https://badge.fury.io/rb/invitation) ![Build status](https://travis-ci.org/tomichj/invitation.svg?branch=master) ![Code Climate](https://codeclimate.com/github/tomichj/invitation/badges/gpa.svg)
@@ -288,7 +288,7 @@ With additional inspiration from:
 * issue many invitations at once?
 * dynamic user name lookup? requires JS, CSS
 * plaintext mailer
-* add JS, JSON support to invites#create
+* add JS support to invites#create
 
 ## License
 
