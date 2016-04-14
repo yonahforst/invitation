@@ -140,18 +140,18 @@ invitation link that will be used to 'claim' the invitation when the new user re
 
 You can send a JSON request to [invites#create](app/controllers/invitation/invites_controller.rb).
 
-* request
-
+* request:
+```javascript
 invite:
 {
     "email": String,
     "invitable_id": Number,
     "invitable_type": String
 }
-
+```
 
 * response:
-
+```javascript
 {
     "id": Number, 
     "email": String, 
@@ -162,7 +162,7 @@ invite:
     "created_at": DateTime, 
     "updated_at": DateTime
 }
-
+```
 
 ## Overriding Invitation
 
@@ -287,7 +287,6 @@ With additional inspiration from:
 * move all view text to locale
 * issue many invitations at once?
 * dynamic user name lookup? requires JS, CSS
-* plaintext mailer
 * add JS support to invites#create
 
 ## License
