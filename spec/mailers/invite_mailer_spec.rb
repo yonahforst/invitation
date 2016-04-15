@@ -1,10 +1,41 @@
 require 'spec_helper'
 
 describe InviteMailer do
+  def get_message_part (mail, content_type)
+    mail.body.parts.find { |p| p.content_type.match content_type }.body.raw_source
+  end
+
+  shared_examples_for 'multipart email' do
+    it 'generates a multipart message (plain text and html)' do
+      expect(mail.body.parts.length).to eq 2
+      expect(mail.body.parts.collect(&:content_type)).to eq ['text/plain; charset=UTF-8', 'text/html; charset=UTF-8']
+    end
+  end
+
+  shared_examples_for 'multipart email with bodies' do
+    context 'multipart email bodies' do
+      describe 'text version' do
+        let(:part) { get_message_part(mail, /plain/) }
+        it 'has invite content' do
+          expect(part).to match /#{invite.sender.email} has invited you to/
+        end
+      end
+
+      describe 'html version' do
+        let(:part) { get_message_part(mail, /html/) }
+        it 'has invite content' do
+          expect(part).to match /#{invite.sender.email} has invited you to/
+        end
+      end
+    end
+  end
 
   describe '#existing_user_invite' do
     let(:invite) { create(:invite, :recipient_is_existing_user) }
     let(:mail)   { InviteMailer.existing_user(invite) }
+
+    it_behaves_like 'multipart email'
+    it_behaves_like 'multipart email with bodies'
 
     it 'renders the subject' do
       expect(mail.subject).to eq 'Invitation instructions'
@@ -17,12 +48,7 @@ describe InviteMailer do
     it 'renders the sender email' do
       expect(mail.from).to eq([Invitation.configuration.mailer_sender])
     end
-
-    it 'renders the mail body invitation' do
-      expect(mail.body).to match /#{invite.sender.email} has invited you to/
-    end
   end
-
 
   describe '#new_user_invite' do
     before do
@@ -32,6 +58,9 @@ describe InviteMailer do
     end
     let(:invite) { create(:invite, :recipient_is_new_user) }
     let(:mail)   { InviteMailer.new_user(invite) }
+
+    it_behaves_like 'multipart email'
+    it_behaves_like 'multipart email with bodies'
 
     it 'renders the subject' do
       expect(mail.subject).to eq 'Invitation instructions'
@@ -43,10 +72,6 @@ describe InviteMailer do
 
     it 'renders the sender email' do
       expect(mail.from).to eq([Invitation.configuration.mailer_sender])
-    end
-
-    it 'renders the mail body invitation' do
-      expect(mail.body).to match /#{invite.sender.email} has invited you to/
     end
   end
 

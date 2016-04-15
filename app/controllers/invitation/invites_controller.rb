@@ -12,10 +12,10 @@ class Invitation::InvitesController < ApplicationController
       #if the user already exists
       if @invite.recipient != nil
         deliver_email(InviteMailer.existing_user(@invite))
-        after_invite_existing_user
+        after_invite_existing_user(@invite)
       else
         deliver_email(InviteMailer.new_user(@invite))
-        after_invite_new_user
+        after_invite_new_user(@invite)
       end
       flash[:notice] = t('invitation.flash.invite_issued', email: @invite.email)
     else
@@ -32,13 +32,13 @@ class Invitation::InvitesController < ApplicationController
 
 
   # Override this if you want to do something more complicated for existing users.
-  def after_invite_existing_user
+  def after_invite_existing_user(invite)
     # Add the user to the organization
-    @invite.invitable.add_invited_user(@invite.recipient)
+    invite.invitable.add_invited_user(@invite.recipient)
   end
 
   # Override if you want to do something more complicated for new users. By default we do nothing.
-  def after_invite_new_user
+  def after_invite_new_user(invite)
   end
 
   #

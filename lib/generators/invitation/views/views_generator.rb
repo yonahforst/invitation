@@ -3,7 +3,7 @@ require 'rails/generators/base'
 #
 # deploy view and locale assets
 #
-module Authenticate
+module Invitation
   module Generators
     class ViewsGenerator < Rails::Generators::Base
       source_root File.expand_path("../../../../..", __FILE__)

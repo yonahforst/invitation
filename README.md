@@ -81,12 +81,11 @@ Configuration parameters are described in detail here: [configuration]
 
 ### Invitable
 
-You'll need to configure one or more model classes as invitables. Invitables are resources or organizations that
-are joined through invitations.
+You'll need to configure one or more model classes as `invitables`. Invitables are resources or organizations that
+are joined with an invite.
 
-Invitables must have a name for Invitation to use in views and mailers.
-
-An invitable needs to call a class method, `invitable`, with one of the following options:
+An `invitable` must have some sort of name for Invitation to use in views and mailers.  An invitable needs to 
+call a class method, `invitable`, with one of the following options:
 * `named: "String"`
 * `named_by: :some_method_name`.
 
@@ -226,7 +225,7 @@ end
 
 * update your routes to use your new controller. 
 
-Start by dumping a copy of authenticate routes to your `config/routes.rb`:
+Start by dumping a copy of Invitation's routes to your `config/routes.rb`:
 
 ```sh
 $ rails generate invitation:routes 
