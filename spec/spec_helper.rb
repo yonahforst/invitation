@@ -52,5 +52,5 @@ def mock_request(params = {})
 end
 
 def current_user
-  @current_user ||= create(:user, :with_company)
+  @current_user ||= FactoryGirl.create(:user, :with_company)
 end

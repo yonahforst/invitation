@@ -14,6 +14,9 @@ class Invite < ActiveRecord::Base
   validates :invitable, presence: true
   validates :sender, presence: true
 
+  def existing_user?
+    recipient != nil
+  end
 
   def generate_token
     self.token = SecureRandom.hex(20).encode('UTF-8')

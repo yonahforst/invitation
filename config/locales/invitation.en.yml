@@ -5,8 +5,12 @@ en:
         email: "Email"
   invitation:
     flash:
-      invite_issued: "Invitation issued to %{email}"
-      invite_error: "Unable to issue invitation"
+      invite_issued:
+        one: "Invitation issued"
+        other: "Invitations issued"
+      invite_error:
+        one: "Unable to issue invitation to %{email}"
+        other: "Unable to issue invitations to %{email}"
     invite_mailer:
       existing_user:
         subject: "Invitation instructions"
