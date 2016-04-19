@@ -149,6 +149,17 @@ invite:
 }
 ```
 
+or, with an array of multiple `emails`:
+
+```javascript
+invite:
+{
+    "emails": [String],
+    "invitable_id": Number,
+    "invitable_type": String
+}
+```
+
 * response:
 ```javascript
 {
@@ -158,9 +169,28 @@ invite:
     "recipient_id": Number (optional), 
     "invitable_id": Number, 
     "invitable_type": String, 
-    "created_at": DateTime, 
-    "updated_at": DateTime
 }
+```
+
+or, with multiple emails requested, an array of responses:
+
+```javascript
+[{
+    "id": Number, 
+    "email": String, 
+    "sender_id": Number, 
+    "recipient_id": Number (optional), 
+    "invitable_id": Number, 
+    "invitable_type": String, 
+},
+{
+    "id": Number, 
+    "email": String, 
+    "sender_id": Number, 
+    "recipient_id": Number (optional), 
+    "invitable_id": Number, 
+    "invitable_type": String, 
+}]
 ```
 
 ## Overriding Invitation
