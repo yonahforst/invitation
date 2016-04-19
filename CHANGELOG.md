@@ -10,7 +10,7 @@
 * fixed invitation view generator packaging
 * significantly more tests
 
-[0.0.3]: https://github.com/tomichj/invitation/compare/0.0.2...0.1.0
+[0.1.0]: https://github.com/tomichj/invitation/compare/0.0.2...0.1.0
 
 
 ## [0.0.2] - April 11, 2016
