@@ -1,14 +1,14 @@
 class Invitation::InvitesController < ApplicationController
+
   def new
-    attrs = params[:invite] ? params.require(:invite).permit(:invitable_id, :invitable_type, :email, emails: []) : {}
-    @invite = Invite.new(attrs)
+    @invite = InviteForm.new(invite_params)
     render template: 'invites/new'
   end
 
   # invite: { invitable_id, invitable_type, email or emails:[] }
   def create
     failures = []
-    invites = build_invites
+    invites = InviteForm.new(invite_params).build_invites(current_user)
     ActiveRecord::Base.transaction do
       invites.each{ |invite| invite.save ? do_invite(invite) : failures << invite.email }
     end
@@ -39,6 +39,42 @@ class Invitation::InvitesController < ApplicationController
   protected
 
 
+  # A form object pretends to be 'invite', but accepts both 'email' and 'emails'.
+  # It knows how to build all of the invite instances.
+  class InviteForm
+    include ActiveModel::Model
+    attr_accessor :invitable_id, :invitable_type, :email, :emails
+    attr_reader :invitable
+
+    def self.model_name # form masquerades as 'invite'
+      ActiveModel::Name.new(self, nil, 'Invite')
+    end
+
+    def initialize(attributes = {})
+      @emails ||= []
+      super
+    end
+
+    def invitable
+      @invitable ||= @invitable_type.classify.constantize.find(@invitable_id)
+    end
+
+    def build_invites(current_user)
+      all_emails.reject{ |e| e.blank? }.collect{ |e|
+        Invite.new(invitable_id: @invitable_id, invitable_type: @invitable_type, sender_id: current_user.id, email: e) }
+    end
+
+    private
+
+    def all_emails
+      @emails + [@email]
+    end
+  end
+
+
+  private
+
+
   # Override this if you want to do something more complicated for existing users.
   # For example, if you have a more complex permissions scheme than just a simple
   # has_many relationship, enable it here.
@@ -61,27 +97,9 @@ class Invitation::InvitesController < ApplicationController
   end
 
 
-  private
-
-  def build_invites
-    attributes = invite_params_for_create
-    attributes[:emails].collect{ |e| Invite.new(invitable_id: attributes[:invitable_id],
-                                                invitable_type: attributes[:invitable_type],
-                                                sender_id: current_user.id,
-                                                email: e) }
+  def invite_params
+    params[:invite] ? params.require(:invite).permit(:invitable_id, :invitable_type, :email, emails: []) : {}
   end
-
-
-  # Paramsters used in #create. Allow :email or :emails in payload.
-  # Copy :email scalar to :emails array, so we only have to process :emails attribute.
-  def invite_params_for_create
-    params[:invite][:emails] ||= []
-    if params[:invite][:email]
-      params[:invite][:emails] << params[:invite][:email]
-    end
-    params.require(:invite).permit(:invitable_id, :invitable_type, emails: [])
-  end
-
 
   # Invite user by sending email.
   # Existing users are granted permissions via #after_invite_existing_user.
