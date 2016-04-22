@@ -8,7 +8,7 @@
 #
 # Common extensions include:
 # * add authorization checks: subclass and add before_actions to :new and :create.
-# * override after_invite_existing_user or after_invite_new_user.
+# * override after_invite_existing_user or after_invite_new_user
 #
 class Invitation::InvitesController < ApplicationController
 

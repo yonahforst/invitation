@@ -111,7 +111,7 @@ If you're using [Authenticate](https://github.com/tomichj/authenticate), for exa
 class UsersController < Authenticate::UsersController
   include Invitation::UserRegistration
   before_action :set_invite_token, only: [:new]
-  after_action :process_invite, only: [:create]
+  after_action :process_invite_token, only: [:create]
 end
 ``` 
 
