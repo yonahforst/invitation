@@ -1,5 +1,13 @@
 # Invitation Changelog
 
+## [0.1.1] - April 21, 2016
+
+External APIs and usage remains the same, internal changes only:
+* invites controller now users a Form object, form accepts :email or :emails, builds one invite per email address.
+
+[0.1.0]: https://github.com/tomichj/invitation/compare/0.1.0...0.1.1
+
+
 ## [0.1.0] - April 18, 2016
 
 * `invites#create` supports :email or emails:[] in request, via html or json.

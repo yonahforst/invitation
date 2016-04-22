@@ -1,3 +1,15 @@
+#
+# Invitation::InvitesController - issue invitations to users via email address.
+#
+# Controller uses an (inner class) Form object that is not a persisted model. The
+# form can accept many email addresses, and creates on Invite per email address.
+#
+# Subclass and modify or extend, or copy the controller into your app with `rails generate invitation:controller`.
+#
+# Common extensions include:
+# * add authorization checks: subclass and add before_actions to :new and :create.
+# * override after_invite_existing_user or after_invite_new_user.
+#
 class Invitation::InvitesController < ApplicationController
 
   def new

@@ -25,12 +25,14 @@ they are added to the invitable resource/organization.
 
 ## Prerequisites
 
-* An authentication system with a User model and current_user helper, e.g. https://github.com/tomichj/authenticate.
+* An authentication system with a User model and current_user helper, e.g. https://github.com/tomichj/authenticate
 * Your user model must include an :email attribute.
 * Additional model classes that are resources or organizations you wish to invite users to join, usually with a
 many-to-many relationship to your user model.
+* You probably also want an authorization system to restrict who can issue invitations to particular resources
 
-A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and users.
+A example user-to-organization system you might be familiar with: Basecamp's concepts of accounts and 
+projects (invitables) and users.
 
 
 ## Install
@@ -82,7 +84,7 @@ Configuration parameters are described in detail here: [configuration]
 ### Invitable
 
 You'll need to configure one or more model classes as `invitables`. Invitables are resources or organizations that
-are joined with an invite.
+can be joined with an invite.
 
 An `invitable` must have some sort of name for Invitation to use in views and mailers.  An invitable needs to 
 call a class method, `invitable`, with one of the following options:
