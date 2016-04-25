@@ -1,3 +1,4 @@
+# Send invitations to new and existing users.
 class InviteMailer < ActionMailer::Base
   def existing_user(invite)
     @invite = invite
@@ -10,7 +11,7 @@ class InviteMailer < ActionMailer::Base
 
   def new_user(invite)
     @invite = invite
-    @user_registration_url = Invitation.configuration.user_registration_url.call(:invite_token => @invite.token)
+    @user_registration_url = Invitation.configuration.user_registration_url.call(invite_token: @invite.token)
     mail(
       from: Invitation.configuration.mailer_sender,
       to: @invite.email,

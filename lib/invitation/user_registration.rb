@@ -1,9 +1,9 @@
-# Your user registration controller should include this concern.
-#
 module Invitation
+  #
+  # UserRegistration should be included by your user registration controller.
+  #
   module UserRegistration
     extend ActiveSupport::Concern
-
 
     # Copy params[:invite_token] to @invite_token. Your user registration form needs
     # to include :invite_token, this method is the controller half of the glue.
@@ -16,7 +16,6 @@ module Invitation
       @invite_token = params[:invite_token]
     end
 
-
     # Check for an invitation token and process the invite. If an invitation is found, the
     # user claims the invite.
     #
@@ -28,25 +27,16 @@ module Invitation
     # For example, if your user model is UserProfile, this method will check for @user_profile.
     #
     def process_invite_token(new_user = nil)
-      if new_user.nil?
-        new_user = user_instance_variable
-      end
-
+      new_user = user_instance_variable if new_user.nil?
       token = params[:invite_token]
-      if token != nil && new_user != nil
-        new_user.claim_invite token
-      end
+      new_user.claim_invite token if !token.nil? && !new_user.nil?
     end
-
 
     private
 
-
     def user_instance_variable
       name = Invitation.configuration.user_model_instance_var
-      self.instance_variable_get(name)
+      instance_variable_get(name)
     end
-
   end
 end
-

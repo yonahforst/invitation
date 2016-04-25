@@ -1,6 +1,5 @@
 require 'spec_helper'
 
-
 describe Invitation::InvitesController do
   describe 'get to #new no params' do
     before do
@@ -15,7 +14,7 @@ describe Invitation::InvitesController do
   describe 'get to #new' do
     before do
       invitable = current_user.companies.first
-      get :new, invite: {invitable_id: invitable.id, invitable_type: invitable.class.name}
+      get :new, invite: { invitable_id: invitable.id, invitable_type: invitable.class.name }
     end
 
     it { is_expected.to respond_with 200 }
@@ -48,7 +47,7 @@ describe Invitation::InvitesController do
       it 'redirects' do
         subject
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(company_url org)
+        expect(response).to redirect_to(company_url(org))
       end
 
       it 'sends email' do
@@ -57,7 +56,7 @@ describe Invitation::InvitesController do
       end
 
       it 'creates invitation' do
-        expect{ subject }.to change{ Invite.count }.by(1)
+        expect { subject }.to change { Invite.count }.by(1)
       end
 
       it 'flashes notice' do
@@ -67,7 +66,10 @@ describe Invitation::InvitesController do
 
       context 'json' do
         context 'invite single user' do
-          subject { post :create, invite: { invitable_id: org.id, invitable_type: org.class.name, email: email }, format: :json }
+          subject do
+            post :create,
+                 invite: { invitable_id: org.id, invitable_type: org.class.name, email: email }, format: :json
+          end
 
           it 'responds with success' do
             subject
@@ -88,7 +90,11 @@ describe Invitation::InvitesController do
 
         context 'invite two users' do
           let(:email2) { 'gug2@gug.com' }
-          subject { post :create, invite: { invitable_id: org.id, invitable_type: org.class.name, emails: [email, email2] }, format: :json }
+          subject do
+            post :create,
+                 invite: { invitable_id: org.id, invitable_type: org.class.name, emails: [email, email2] },
+                 format: :json
+          end
 
           it 'responds with success' do
             subject
@@ -112,7 +118,6 @@ describe Invitation::InvitesController do
             expect(invites[1]['invitable_type']).to eq org.class.name
           end
         end
-
       end
     end
 
@@ -135,7 +140,7 @@ describe Invitation::InvitesController do
       end
 
       it 'creates invitation' do
-        expect{ subject }.to change{ Invite.count }.by(1)
+        expect { subject }.to change { Invite.count }.by(1)
       end
 
       it 'flashes notice' do
@@ -151,17 +156,15 @@ describe Invitation::InvitesController do
       before do
         allow(InviteMailer).to receive(:existing_user) { mail }
       end
-      subject { post :create,
-                     invite: { invitable_id: org.id, invitable_type: org.class.name,
-                               # emails: [recipient1.email, recipient2.email] },
-                               email: recipient1.email },
-                     format: :json }
+      subject do
+        post :create, invite: { invitable_id: org.id, invitable_type: org.class.name,
+                                emails: [recipient1.email, recipient2.email] },
+                      format: :json
+      end
       it 'gug' do
         subject
         # puts response.inspect
       end
-
     end
   end
-
 end

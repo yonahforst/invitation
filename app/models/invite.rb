@@ -24,8 +24,6 @@ class Invite < ActiveRecord::Base
 
   def check_recipient_existence
     recipient = Invitation.configuration.user_model.find_by_email(email)
-    if recipient
-      self.recipient_id = recipient.id
-    end
+    self.recipient_id = recipient.id if recipient
   end
 end

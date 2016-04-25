@@ -2,9 +2,9 @@ require 'spec_helper'
 require 'invitation/configuration'
 
 describe Invitation::Configuration do
-
   context 'a namespaced user class' do
     module Gug
+      # Faux profile model class
       class Profile
         extend ActiveModel::Naming
       end
@@ -25,6 +25,7 @@ describe Invitation::Configuration do
   end
 
   context 'a deeper user class name' do
+    # Another faux user profile.
     class UserProfile; extend ActiveModel::Naming end
 
     it 'has a user model instance variable name' do
@@ -38,5 +39,4 @@ describe Invitation::Configuration do
   #   @conf = Invitation::Configuration.new
   #   expect(@conf.user_registration_url.call(foo: 'bar')).to eq('gug')
   # end
-
 end

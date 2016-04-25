@@ -7,11 +7,7 @@ FactoryGirl.define do
     email
 
     trait :with_company do
-      after(:create) { |user|
-        user.companies << create(:company)
-      }
+      after(:create) { |user| user.companies << create(:company) }
     end
-
   end
-
 end

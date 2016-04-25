@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe InviteMailer do
-  def get_message_part (mail, content_type)
+  def get_message_part(mail, content_type)
     mail.body.parts.find { |p| p.content_type.match content_type }.body.raw_source
   end
 
@@ -17,14 +17,14 @@ describe InviteMailer do
       describe 'text version' do
         let(:part) { get_message_part(mail, /plain/) }
         it 'has invite content' do
-          expect(part).to match /#{invite.sender.email} has invited you to/
+          expect(part).to match(/#{invite.sender.email} has invited you to/)
         end
       end
 
       describe 'html version' do
         let(:part) { get_message_part(mail, /html/) }
         it 'has invite content' do
-          expect(part).to match /#{invite.sender.email} has invited you to/
+          expect(part).to match(/#{invite.sender.email} has invited you to/)
         end
       end
     end
@@ -52,7 +52,7 @@ describe InviteMailer do
 
   describe '#new_user_invite' do
     before do
-      allow(Invitation.configuration).to receive(:user_registration_url).and_return(lambda do |params|
+      allow(Invitation.configuration).to receive(:user_registration_url).and_return(lambda do |_params|
         'http://example.org/user_reg_link'
       end)
     end
@@ -74,6 +74,4 @@ describe InviteMailer do
       expect(mail.from).to eq([Invitation.configuration.mailer_sender])
     end
   end
-
 end
-

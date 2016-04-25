@@ -16,7 +16,6 @@ describe Invitation::Invitable do
   end
 
   describe '#invitable_name' do
-
     context 'invitable named_by is set' do
       it 'has an organization name' do
         company = create(:company)
@@ -27,7 +26,7 @@ describe Invitation::Invitable do
     context 'invitable named is set' do
       it 'has an organization name' do
         project = create(:project)
-        expect(project.invitable_name).to eq "Project Number"
+        expect(project.invitable_name).to eq 'Project Number'
       end
     end
 
@@ -36,11 +35,8 @@ describe Invitation::Invitable do
         class AbstractModel < ActiveRecord::Base; end
         stub_const 'Project', AbstractModel
         Project.class_eval { self.table_name = 'projects' }
-        expect { Project.class_eval { invitable } }.to raise_error /invitable requires options be set/
+        expect { Project.class_eval { invitable } }.to raise_error(/invitable requires options be set/)
       end
     end
-
   end
-
 end
-

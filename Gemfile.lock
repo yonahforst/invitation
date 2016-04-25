@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invitation (0.1.0)
+    invitation (0.1.1)
       rails (>= 4.0, < 5.1)
 
 GEM

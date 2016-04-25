@@ -11,45 +11,46 @@
 # * override after_invite_existing_user or after_invite_new_user
 #
 class Invitation::InvitesController < ApplicationController
-
   def new
     @invite = InviteForm.new(invite_params)
     render template: 'invites/new'
   end
 
-  # invite: { invitable_id, invitable_type, email or emails:[] }
+  # Create one or more Invite instances.
+  #   invite: { invitable_id, invitable_type, email or emails:[] }
+  #
   def create
     failures = []
     invites = InviteForm.new(invite_params).build_invites(current_user)
     ActiveRecord::Base.transaction do
-      invites.each{ |invite| invite.save ? do_invite(invite) : failures << invite.email }
+      invites.each { |invite| invite.save ? do_invite(invite) : failures << invite.email }
     end
 
     respond_to do |format|
-      format.html {
+      format.html do
         if failures.empty?
           flash[:notice] = t('invitation.flash.invite_issued', count: invites.count)
         else
           flash[:error] = t('invitation.flash.invite_error', count: failures.count, email: failures.to_sentence)
         end
-        redirect_to url_after_invite(invites.first) # FIXME - redirect to back
-      }
-      format.json {
+        redirect_to url_after_invite(invites.first) # FIXME: redirect to back
+      end
+      format.json do
         if failures.empty?
           # If we received a single email, json response should be a scalar, not an array.
-          invites = params[:invite].has_key?('email') ? invites.first : invites
+          invites = params[:invite].key?('email') ? invites.first : invites
           render json: invites.as_json(except: [:token, :created_at, :updated_at]), status: 201
         else
-          render json:{ message: t('invitation.flash.invite_error', count: failures.count, email: failures.to_sentence),
-                        status: :unprocessable_entity }
+          render json: {
+            message: t('invitation.flash.invite_error', count: failures.count, email: failures.to_sentence),
+            status: :unprocessable_entity
+          }
         end
-      }
+      end
     end
   end
 
-
-  protected
-
+  private
 
   # A form object pretends to be 'invite', but accepts both 'email' and 'emails'.
   # It knows how to build all of the invite instances.
@@ -72,8 +73,9 @@ class Invitation::InvitesController < ApplicationController
     end
 
     def build_invites(current_user)
-      all_emails.reject{ |e| e.blank? }.collect{ |e|
-        Invite.new(invitable_id: @invitable_id, invitable_type: @invitable_type, sender_id: current_user.id, email: e) }
+      all_emails.reject(&:blank?).collect do |e|
+        Invite.new(invitable_id: @invitable_id, invitable_type: @invitable_type, sender_id: current_user.id, email: e)
+      end
     end
 
     private
@@ -83,10 +85,6 @@ class Invitation::InvitesController < ApplicationController
     end
   end
 
-
-  private
-
-
   # Override this if you want to do something more complicated for existing users.
   # For example, if you have a more complex permissions scheme than just a simple
   # has_many relationship, enable it here.
@@ -95,19 +93,16 @@ class Invitation::InvitesController < ApplicationController
     invite.invitable.add_invited_user(invite.recipient)
   end
 
-
   # Override if you want to do something more complicated for new users.
   # By default we don't do anything extra.
   def after_invite_new_user(invite)
   end
-
 
   # After an invite is created, redirect the user here.
   # Default implementation doesn't return a url, just the invitable.
   def url_after_invite(invite)
     invite.invitable
   end
-
 
   def invite_params
     params[:invite] ? params.require(:invite).permit(:invitable_id, :invitable_type, :email, emails: []) : {}
@@ -127,7 +122,6 @@ class Invitation::InvitesController < ApplicationController
     end
   end
 
-
   # Use deliver_later from rails 4.2+ if available.
   def deliver_email(mail)
     if mail.respond_to?(:deliver_later)
@@ -136,5 +130,4 @@ class Invitation::InvitesController < ApplicationController
       mail.deliver
     end
   end
-
 end

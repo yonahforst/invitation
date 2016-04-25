@@ -10,7 +10,10 @@ module Invitation
 
       source_root File.expand_path('../templates', __FILE__)
 
-      class_option :model, optional: true, type: :string, banner: 'model',
+      class_option :model,
+                   optional: true,
+                   type: :string,
+                   banner: 'model',
                    desc: "Specify the model class name if you will use anything other than 'User'"
 
       # class_option :invitable, optional: true, type: :array, banner: 'invitable',
@@ -54,24 +57,25 @@ module Invitation
         copy_file 'invitation.rb', 'config/initializers/invitation.rb'
         if options[:model]
           inject_into_file(
-              'config/initializers/invitation.rb',
-              "  config.user_model = '#{options[:model]}' \n",
-              after: "Invitation.configure do |config|\n",
+            'config/initializers/invitation.rb',
+            "  config.user_model = '#{options[:model]}' \n",
+            after: "Invitation.configure do |config|\n"
           )
         end
       end
 
-      private
+      class << self
+        protected
 
-      def copy_migration migration_name
-        migration_template "db/migrate/#{migration_name}", "db/migrate/#{migration_name}"
+        def copy_migration(migration_name)
+          migration_template "db/migrate/#{migration_name}", "db/migrate/#{migration_name}"
+        end
+
+        # for generating a timestamp when using `create_migration`
+        def self.next_migration_number(dir)
+          ActiveRecord::Generators::Base.next_migration_number(dir)
+        end
       end
-
-      # for generating a timestamp when using `create_migration`
-      def self.next_migration_number(dir)
-        ActiveRecord::Generators::Base.next_migration_number(dir)
-      end
-
     end
   end
 end

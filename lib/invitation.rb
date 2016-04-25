@@ -4,6 +4,7 @@ require 'invitation/user'
 require 'invitation/invitable'
 require 'invitation/user_registration'
 
+# Top level module of invitation gem.
 module Invitation
 end
 

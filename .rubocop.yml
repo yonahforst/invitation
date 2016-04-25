@@ -1,0 +1,20 @@
+AllCops:
+  Exclude:
+    - 'bin/rails'
+    - 'spec/dummy/**/*'
+    - 'lib/generators/invitation/install/templates/db/migrate/**/*'
+
+Metrics/LineLength:
+  Max: 120
+
+Documentation:
+  Exclude:
+    - 'lib/generators/**/*'
+
+Metrics/MethodLength:
+  Exclude:
+    - 'app/controllers/invitation/invites_controller.rb'
+
+Metrics/AbcSize:
+  Exclude:
+    - 'app/controllers/invitation/invites_controller.rb'

@@ -1,4 +1,5 @@
-$:.push File.expand_path("../lib", __FILE__)
+require 'English'
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 require 'invitation/version'
 require 'date'
