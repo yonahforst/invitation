@@ -64,17 +64,15 @@ module Invitation
         end
       end
 
-      class << self
-        protected
+      protected
 
-        def copy_migration(migration_name)
-          migration_template "db/migrate/#{migration_name}", "db/migrate/#{migration_name}"
-        end
+      def copy_migration(migration_name)
+        migration_template "db/migrate/#{migration_name}", "db/migrate/#{migration_name}"
+      end
 
-        # for generating a timestamp when using `create_migration`
-        def self.next_migration_number(dir)
-          ActiveRecord::Generators::Base.next_migration_number(dir)
-        end
+      # for generating a timestamp when using `create_migration`
+      def self.next_migration_number(dir)
+        ActiveRecord::Generators::Base.next_migration_number(dir)
       end
     end
   end
