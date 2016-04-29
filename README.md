@@ -104,7 +104,7 @@ end
 ### User Registration Controller
 
 Your user registration controller must `include Invitation::UserRegistration`. You'll want to invoke `set_invite_token`
-before you execute your `new` action, and `process_invite` after your create action.
+before you execute your `new` action, and `process_invite_token` after your `create` action.
 
 If you're using [Authenticate](https://github.com/tomichj/authenticate), for example:
 ```ruby
