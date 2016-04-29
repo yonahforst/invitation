@@ -18,3 +18,7 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Exclude:
     - 'app/controllers/invitation/invites_controller.rb'
+
+Lint/IneffectiveAccessModifier:
+  Exclude:
+    - 'lib/generators/invitation/**/*'
