@@ -46,7 +46,7 @@ module Invitation
     attr_accessor :routes
 
     def initialize
-      @user_model = ::User
+      @user_model = ::User if defined?(::User)
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @routes = true
