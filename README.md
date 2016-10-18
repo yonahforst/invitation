@@ -310,6 +310,11 @@ This gem was inspired by and draws heavily from:
 With additional inspiration from:
 * https://github.com/scambra/devise_invitable
 
+## Contributors
+
+Many thanks to:
+
+* [augustocbx](https://github.com/augustocbx) added pt-BR locale file and fixed an init bug
 
 ## Future changes
 

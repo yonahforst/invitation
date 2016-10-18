@@ -1,5 +1,13 @@
 # Invitation Changelog
 
+## [0.2] - October 17, 2016
+
+Contribution from [augustocbx](https://github.com/augustocbx) adding pt-BR locale file and fixing an init bug.
+
+[0.2]: https://github.com/tomichj/invitation/compare/0.1.1...0.2
+
+
+
 ## [0.1.1] - April 21, 2016
 
 External APIs and usage remains the same, internal changes only:
