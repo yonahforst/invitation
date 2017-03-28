@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -28,13 +27,12 @@ ActiveRecord::Schema.define(version: 20160303214941) do
     t.string   "invitable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["email"], name: "index_invites_on_email"
+    t.index ["invitable_id", "invitable_type"], name: "index_invites_on_invitable_id_and_invitable_type"
+    t.index ["recipient_id"], name: "index_invites_on_recipient_id"
+    t.index ["sender_id"], name: "index_invites_on_sender_id"
+    t.index ["token"], name: "index_invites_on_token"
   end
-
-  add_index "invites", ["email"], name: "index_invites_on_email"
-  add_index "invites", ["invitable_id", "invitable_type"], name: "index_invites_on_invitable_id_and_invitable_type"
-  add_index "invites", ["recipient_id"], name: "index_invites_on_recipient_id"
-  add_index "invites", ["sender_id"], name: "index_invites_on_sender_id"
-  add_index "invites", ["token"], name: "index_invites_on_token"
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "company_id"

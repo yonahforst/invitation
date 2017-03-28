@@ -25,7 +25,7 @@ class Invitation::InvitesController < ApplicationController
     ActiveRecord::Base.transaction do
       invites.each { |invite| invite.save ? do_invite(invite) : failures << invite.email }
     end
-
+    logger.info "!!!!!!!!!!!!!!!!!!!!! INSIDE CREATE: current_user: #{current_user.inspect}"
     respond_to do |format|
       format.html do
         if failures.empty?

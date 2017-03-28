@@ -1,10 +1,7 @@
 Rails.application.routes.draw do
-  get 'company_controller/show'
-
   get 'welcome/index'
   root 'welcome#index'
-
-  resources :company, only: [:show]
+  resources :companies, only: [:show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
