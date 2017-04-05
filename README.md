@@ -195,6 +195,40 @@ or, with multiple emails requested, an array of responses:
 }]
 ```
 
+## Security
+
+Many systems require authorization to issue invitations to a resource. `Invitation` does not handle authorization,
+but is intended to be a simple, easily extended framework upon which you can impose any required authorization scheme.
+
+Most implementations will require extending the `InvitationsController`. [See below](#controllers) to read more
+about extending InvitationController.
+
+A common use case:
+* every invitable resource has authorization requirements exposed via a method, we'll call it `can_invite?(user)`
+* the current user must be authorized before issuing invitations
+
+To implement: extend `InvitesController` and add a before_action to authorize access to the resource or resources. A
+real implementation would probably do something more than just `raise 'unauthorized'`.
+
+```ruby
+# app/controllers/invites_controller.rb
+class InvitesController < Invitation::InvitesController
+  before_action :authorize
+
+  private
+
+  def authorize
+    invitable = load_invitable
+    invitable.can_invite?(current_user) or raise 'unauthorized'
+  end
+
+  def load_invitable
+    invite_params[:invitable_type].classify.constantize.find(invite_params[:invitable_id])
+  end
+end
+```
+
+
 ## Overriding Invitation
 
 
