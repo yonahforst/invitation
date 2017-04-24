@@ -8,6 +8,7 @@ class Invite < ActiveRecord::Base
   belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name
 
   before_create :generate_token
+  before_save :set_email_case, on: :create
   before_save :check_recipient_existence
 
   validates :email, presence: true
@@ -25,5 +26,11 @@ class Invite < ActiveRecord::Base
   def check_recipient_existence
     recipient = Invitation.configuration.user_model.find_by_email(email)
     self.recipient_id = recipient.id if recipient
+  end
+
+  private
+
+  def set_email_case
+    email.downcase! unless Invitation.configuration.case_sensitive_email
   end
 end
