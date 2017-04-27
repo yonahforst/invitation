@@ -349,7 +349,8 @@ With additional inspiration from:
 Many thanks to:
 
 * [augustocbx](https://github.com/augustocbx) added pt-BR locale file and fixed an init bug
-* [vincentwoo](https://github.com/vincentwoo/) raising the security bar, & bumping Invitation to rails 5.1 
+* [vincentwoo](https://github.com/vincentwoo/) raising the security bar, & bumping Invitation to rails 5.1
+* [conarro](https://github.com/conarro) added case_sensitive_email configuration option
 
 ## Future changes
 
