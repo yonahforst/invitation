@@ -45,11 +45,20 @@ module Invitation
     # @return [Boolean]
     attr_accessor :routes
 
+    # Enable or disable email case-sensivity when inviting users.
+    # If set to 'false', searching for user existence via email will disregard case.
+    #
+    # Defaults to 'true'.
+    #
+    # @return [Boolean]
+    attr_accessor :case_sensitive_email
+
     def initialize
       @user_model = ::User if defined?(::User)
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @routes = true
+      @case_sensitive_email = true
     end
 
     def user_model_class_name
