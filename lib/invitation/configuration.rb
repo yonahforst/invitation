@@ -54,19 +54,23 @@ module Invitation
     attr_accessor :case_sensitive_email
 
     def initialize
-      @user_model = ::User if defined?(::User)
+      @user_model = '::User' #if defined?(::User)
       @user_registration_url = ->(params) { Rails.application.routes.url_helpers.sign_up_url(params) }
       @mailer_sender = 'reply@example.com'
       @routes = true
       @case_sensitive_email = true
     end
 
+    def user_model
+      @user_model.constantize
+    end
+
     def user_model_class_name
-      @user_model.name.to_s
+      user_model.name.to_s
     end
 
     def user_model_instance_var
-      '@' + @user_model.name.demodulize.underscore
+      '@' + user_model.name.demodulize.underscore
     end
 
     # @return [Boolean] are Invitation's built-in routes enabled?

@@ -23,7 +23,7 @@ describe Invitation::Configuration do
 
     before(:each) do
       @conf = Invitation::Configuration.new
-      @conf.user_model = Gug::Profile
+      @conf.user_model = 'Gug::Profile'
     end
 
     it 'has a user model class name' do
@@ -41,7 +41,7 @@ describe Invitation::Configuration do
 
     it 'has a user model instance variable name' do
       @conf = Invitation::Configuration.new
-      @conf.user_model = UserProfile
+      @conf.user_model = 'UserProfile'
       expect(@conf.user_model_instance_var).to eq('@user_profile')
     end
   end
