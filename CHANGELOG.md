@@ -1,8 +1,46 @@
 # Invitation Changelog
 
+
+## [0.4.2] - July 1, 2017
+
+### API change
+- accept a string for configuration.user_model and constantize it
+ 
+[0.4.2]: https://github.com/tomichj/invitation/compare/0.4.1...0.4.2
+
+
+
+## [0.4.1] - April 26, 2017
+
+### Bugfix:
+- added case_insensitive_email to template used by install generator
+ 
+[0.4.1]: https://github.com/tomichj/invitation/compare/0.4...0.4.1
+
+
+
+## [0.4] - April 26, 2017
+
+### Feature:
+- added case_sensitive_email configuration option.
+
+[0.4]: https://github.com/tomichj/invitation/compare/0.3...0.4
+
+
+
+## [0.3] - March 26, 2017
+
+### Feature:
+- Added support for Rails 5.1
+
+[0.3]: https://github.com/tomichj/invitation/compare/0.2...0.3
+
+
+
 ## [0.2] - October 17, 2016
 
-Contribution from [augustocbx](https://github.com/augustocbx) adding pt-BR locale file and fixing an init bug.
+### Feature:
+- adding pt-BR locale file and fixing an init bug.
 
 [0.2]: https://github.com/tomichj/invitation/compare/0.1.1...0.2
 
@@ -10,8 +48,8 @@ Contribution from [augustocbx](https://github.com/augustocbx) adding pt-BR local
 
 ## [0.1.1] - April 21, 2016
 
-External APIs and usage remains the same, internal changes only:
-* invites controller now users a Form object, form accepts :email or :emails, builds one invite per email address.
+### Internal changes:
+- invites controller now users a Form object, form accepts :email or :emails, builds one invite per email address.
 
 [0.1.1]: https://github.com/tomichj/invitation/compare/0.1.0...0.1.1
 

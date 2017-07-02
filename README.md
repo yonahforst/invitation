@@ -8,6 +8,17 @@ Please use [GitHub Issues] to report bugs. You can contact me directly on twitte
 [![Gem Version](https://badge.fury.io/rb/invitation.svg)](https://badge.fury.io/rb/invitation) ![Build status](https://travis-ci.org/tomichj/invitation.svg?branch=master) ![Code Climate](https://codeclimate.com/github/tomichj/invitation/badges/gpa.svg)
 
 
+### Warning - 0.4.2 api change
+
+Release 0.4.2 includes an API change in configuration, config.user_model is now set to a string. Example:
+
+```ruby
+Invitation.configuration do |config|
+    config.user_model = 'Profile'
+end
+```
+
+
 ## Overview
 
 Allow users to invite others to join an organization or resource. Plenty of gems can issue a 'system-wide' invitation,
@@ -352,6 +363,7 @@ Many thanks to:
 * [augustocbx](https://github.com/augustocbx) added pt-BR locale file and fixed an init bug
 * [vincentwoo](https://github.com/vincentwoo/) raising the security bar, & bumping Invitation to rails 5.1
 * [conarro](https://github.com/conarro) added case_sensitive_email configuration option
+* [itkin](https://github.com/itkin) bugfix, stringified configuration.user_model 
 
 ## Future changes
 
