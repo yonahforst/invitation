@@ -8,9 +8,18 @@ module Invitation
   #   end
   #
   class Configuration
-    # ActiveRecord model class name that represents your user.
+    # Name of the ActiveRecord class that represents users in your application.
+    #
+    # Example:
+    #   Invitation.configure do |config|
+    #     config.user_model = 'User'
+    #   end
+    #
+    # DEPRECATED: can be set to the user class (not it's name), e.g. `config.user_model = User`.
+    # Support for setting the class directly may be removed in a future update.
     #
     # Defaults to '::User'.
+    #
     # @return [ActiveRecord::Base]
     attr_accessor :user_model
 
@@ -61,8 +70,28 @@ module Invitation
       @case_sensitive_email = true
     end
 
+    # @return [Class]
     def user_model
-      @user_model.constantize
+      if !@user_model.respond_to?(:constantize) && @user_model_class.nil?
+        warn <<-EOM.squish
+          Invitation's `user_model` configuration setting should now be set to a string
+          specifying the user model's class name.
+          
+          Future versions of Invitation will no longer support setting user_model to a class.
+          
+          It is recommended that you opt-in now and set your user model to a class name.
+          Example:
+            Invitation.configure do |config|
+              config.user_model = 'User'
+            end
+        EOM
+      end
+      @user_model_class ||=
+        if @user_model.respond_to?(:constantize)
+          @user_model.constantize
+        else
+          @user_model
+        end
     end
 
     def user_model_class_name

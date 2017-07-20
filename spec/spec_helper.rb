@@ -31,8 +31,6 @@ if ActiveRecord::VERSION::STRING >= '4.2' && ActiveRecord::VERSION::STRING < '5.
   ActiveRecord::Base.raise_in_transactional_callbacks = true
 end
 
-puts 'MAJOR:' + Rails::VERSION::MAJOR.to_s
-
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.infer_spec_type_from_file_location!
