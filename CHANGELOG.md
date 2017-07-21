@@ -1,5 +1,13 @@
 # Invitation Changelog
 
+## [0.4.3] - July 1, 2017
+
+### API change
+- configuration.user_model now accepts the user class (with a warning), or the user class name (a String)
+ 
+[0.4.3]: https://github.com/tomichj/invitation/compare/0.4.2...0.4.3
+
+
 
 ## [0.4.2] - July 1, 2017
 

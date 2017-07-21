@@ -10,13 +10,15 @@ Please use [GitHub Issues] to report bugs. You can contact me directly on twitte
 
 ### Warning - 0.4.2 api change
 
-Release 0.4.2 includes an API change in configuration, config.user_model is now set to a string. Example:
+Release 0.4.2 includes an API change in configuration, `config.user_model` is now set to a string. Example:
 
 ```ruby
 Invitation.configuration do |config|
     config.user_model = 'Profile'
 end
 ```
+
+Fix in 0.4.3: `config.user_model` now accepts the user class again, in addition to the preferred String.
 
 
 ## Overview
