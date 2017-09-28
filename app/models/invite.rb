@@ -5,7 +5,13 @@
 class Invite < ActiveRecord::Base
   belongs_to :invitable, polymorphic: true
   belongs_to :sender, class_name: Invitation.configuration.user_model_class_name
-  belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name
+
+  # Rails >= 5 makes belongs_to association required by default
+  if Rails::VERSION::MAJOR >= 5
+    belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name, optional: true
+  else
+    belongs_to :recipient, class_name: Invitation.configuration.user_model_class_name
+  end
 
   before_create :generate_token
   before_save :set_email_case, on: :create
