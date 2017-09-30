@@ -366,6 +366,7 @@ Many thanks to:
 * [vincentwoo](https://github.com/vincentwoo/) raising the security bar, & bumping Invitation to rails 5.1
 * [conarro](https://github.com/conarro) added case_sensitive_email configuration option
 * [itkin](https://github.com/itkin) bugfix, stringified configuration.user_model 
+* [thesubr00t](https://github.com/thesubr00t) made recipient association optional for rails 5+
 
 ## Future changes
 

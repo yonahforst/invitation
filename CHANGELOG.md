@@ -1,5 +1,11 @@
 # Invitation Changelog
 
+## [0.4.4] - September 30, 2017
+- recipient association optional for Rails >= 5
+
+[0.4.4]: https://github.com/tomichj/invitation/compare/0.4.3...0.4.4
+
+
 ## [0.4.3] - July 1, 2017
 
 ### API change
