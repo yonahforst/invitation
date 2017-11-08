@@ -128,7 +128,7 @@ class UsersController < Authenticate::UsersController
   after_action :process_invite_token, only: [:create]
 end
 ``` 
-
+To pass the invite token on signup, add `invite_token` as a hidden field in your signup form.
 
 ## Usage
 
