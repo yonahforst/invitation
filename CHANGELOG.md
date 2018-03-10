@@ -1,5 +1,13 @@
 # Invitation Changelog
 
+## [0.4.5] - September 30, 2017
+
+### Bugfix:
+- migration versioned for Rails >= 5
+
+[0.4.5]: https://github.com/tomichj/invitation/compare/0.4.4...0.4.5
+
+
 ## [0.4.4] - September 30, 2017
 - recipient association optional for Rails >= 5
 

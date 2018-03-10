@@ -68,6 +68,12 @@ module Invitation
           [invitable_class_name.classify]
         end.join('::')
       end
+
+      def migration_version
+        if Rails.version.start_with? '5'
+          "[#{ActiveRecord::Migration.current_version}]"
+        end
+      end
     end
   end
 end

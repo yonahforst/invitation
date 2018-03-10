@@ -1,4 +1,4 @@
-class CreateInvites < ActiveRecord::Migration
+class CreateInvites < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :invites do |t|
       t.string :email
