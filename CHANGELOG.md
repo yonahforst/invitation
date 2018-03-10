@@ -1,6 +1,6 @@
 # Invitation Changelog
 
-## [0.4.5] - September 30, 2017
+## [0.4.5] - March 9, 2018
 
 ### Bugfix:
 - migration versioned for Rails >= 5
