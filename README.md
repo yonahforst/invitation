@@ -2,6 +2,8 @@
 
 A Rails gem to issue scoped invitations.
 
+Please see the [CHANGELOG] for information on the latest changes.
+
 Please use [GitHub Issues] to report bugs. You can contact me directly on twitter at
 [@JustinTomich](https://twitter.com/justintomich).
 
@@ -370,4 +372,5 @@ This project rocks and uses MIT-LICENSE.
 
 
 [configuration]: lib/invitation/configuration.rb
+[CHANGELOG]: CHANGELOG.md
 [GitHub Issues]: https://github.com/tomichj/invitation/issues
