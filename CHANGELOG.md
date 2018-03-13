@@ -1,5 +1,15 @@
 # Invitation Changelog
 
+## [0.5.0] - March 12, 2018
+
+### API change
+- `InviteForm` extracted from invites_controller.rb, added at `app/forms/invitation/invite_form.rb`
+- `controllers_generator.rb` now has three targets: `create_controllers`, `create_mailers`, and `create_forms`
+- deleted empty `lib/tasks/invitation_tasks.rake`
+
+[0.5.0]: https://github.com/tomichj/invitation/compare/0.4.5...0.5.0
+
+
 ## [0.4.5] - March 9, 2018
 
 ### Bugfix:

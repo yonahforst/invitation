@@ -15,6 +15,10 @@ module Invitation
       def create_mailers
         directory 'app/mailers'
       end
+
+      def create_forms
+        directory 'app/forms'
+      end
     end
   end
 end
