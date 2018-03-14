@@ -1,5 +1,7 @@
 # Invitation Changelog
 
+
+
 ## [0.5.0] - March 12, 2018
 
 ### API change
@@ -8,6 +10,7 @@
 - deleted empty `lib/tasks/invitation_tasks.rake`
 
 [0.5.0]: https://github.com/tomichj/invitation/compare/0.4.5...0.5.0
+
 
 
 ## [0.4.5] - March 9, 2018
