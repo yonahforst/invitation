@@ -12,7 +12,7 @@
 - specs now test for http status 201 instead of :success and :created,
   :success was deprecated, switched to 201 for brevity and longevity of test
 
-[0.5.0]: https://github.com/tomichj/invitation/compare/0.5.0...0.5.1
+[0.5.1]: https://github.com/tomichj/invitation/compare/0.5.0...0.5.1
 
 
 ## [0.5.0] - March 12, 2018
@@ -55,14 +55,12 @@
 [0.4.2]: https://github.com/tomichj/invitation/compare/0.4.1...0.4.2
 
 
-
 ## [0.4.1] - April 26, 2017
 
 ### Bugfix:
 - added case_insensitive_email to template used by install generator
  
 [0.4.1]: https://github.com/tomichj/invitation/compare/0.4...0.4.1
-
 
 
 ## [0.4] - April 26, 2017
@@ -73,7 +71,6 @@
 [0.4]: https://github.com/tomichj/invitation/compare/0.3...0.4
 
 
-
 ## [0.3] - March 26, 2017
 
 ### Feature:
@@ -82,14 +79,12 @@
 [0.3]: https://github.com/tomichj/invitation/compare/0.2...0.3
 
 
-
 ## [0.2] - October 17, 2016
 
 ### Feature:
 - adding pt-BR locale file and fixing an init bug.
 
 [0.2]: https://github.com/tomichj/invitation/compare/0.1.1...0.2
-
 
 
 ## [0.1.1] - April 21, 2016
