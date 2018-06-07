@@ -27,8 +27,7 @@ describe 'api' do
     it 'responds with success' do
       sign_in_with @user
       subject
-      expect(response).to have_http_status(:success)
-      expect(response).to have_http_status(:created)
+      expect(response).to have_http_status(201) # 201 is http status 'created'
     end
 
     it 'responds with json invites' do
