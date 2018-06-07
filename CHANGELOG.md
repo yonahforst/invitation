@@ -1,6 +1,19 @@
 # Invitation Changelog
 
 
+## [0.5.1] - June 7, 2018
+
+### Feature: support for rails 5.2
+- added Appraisal entry and gemfile for 5.2
+- added rakefile tasks for build and release
+- bumped gemspec to include rails 5.2
+- bumped version
+- added sqlite3.represent_boolean_as_integer = true to dummy app for specs
+- specs now test for http status 201 instead of :success and :created,
+  :success was deprecated, switched to 201 for brevity and longevity of test
+
+[0.5.0]: https://github.com/tomichj/invitation/compare/0.5.0...0.5.1
+
 
 ## [0.5.0] - March 12, 2018
 
@@ -10,7 +23,6 @@
 - deleted empty `lib/tasks/invitation_tasks.rake`
 
 [0.5.0]: https://github.com/tomichj/invitation/compare/0.4.5...0.5.0
-
 
 
 ## [0.4.5] - March 9, 2018
@@ -33,7 +45,6 @@
 - configuration.user_model now accepts the user class (with a warning), or the user class name (a String)
  
 [0.4.3]: https://github.com/tomichj/invitation/compare/0.4.2...0.4.3
-
 
 
 ## [0.4.2] - July 1, 2017
